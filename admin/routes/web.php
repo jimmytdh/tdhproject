@@ -11,6 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'MainController@index');
+
+Route::get('/login','MainController@login');
+Route::post('/login','MainController@validateLogin');
+
+//Update administrator account
+Route::post('system/update','MainController@update');
+
+//Homepage of admin
+Route::get('/home','HomeController@index');
+
