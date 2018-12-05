@@ -16,6 +16,10 @@ Route::get('/', 'MainController@index');
 Route::get('/login','MainController@login');
 Route::post('/login','MainController@validateLogin');
 
+//Accounts page
+Route::get('/accounts','AccountController@index');
+Route::get('/accounts/add','AccountController@add');
+
 //Update administrator account
 Route::post('system/update','MainController@update');
 

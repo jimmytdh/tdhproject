@@ -13,7 +13,8 @@ class MainController extends Controller
 {
     public function __construct()
     {
-
+        $this->middleware('admin');
+        $this->middleware('login');
     }
 
     public function index()

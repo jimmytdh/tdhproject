@@ -18,7 +18,13 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/lib/stroke-7/style.css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/lib/theme-switcher/theme-switcher.min.css"/>
+    @yield('css')
     <link type="text/css" href="{{ asset('/') }}/assets/css/app.css" rel="stylesheet">
+    <style>
+        body {
+            background: url("{{ url('img/backdrop.png') }}"), -webkit-gradient(radial, center center, 0, center center, 460, from(#ccc), to(#ddd));
+        }
+    </style>
 <body>
 <nav class="navbar navbar-expand navbar-dark mai-top-header">
     <div class="container"><a href="#" class="navbar-brand"></a>
@@ -27,8 +33,11 @@
             <li class="nav-item"><a href="{{ url('portal') }}" class="nav-link">Portal</a></li>
             <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">Other Systems <span class="angle-down s7-angle-down"></span></a>
                 <div role="menu" class="dropdown-menu">
+                    <a href="#" class="dropdown-item">DTS</a>
                     <a href="#" class="dropdown-item">HRIS</a>
                     <a href="#" class="dropdown-item">Inventory System</a>
+                    <a href="#" class="dropdown-item">IT Reservation System</a>
+                    <a href="#" class="dropdown-item">Calendar Event</a>
                 </div>
             </li>
         </ul>
@@ -138,7 +147,7 @@
                         <li class="nav-item parent"><a href="#" role="button" aria-expanded="false" class="nav-link"><span class="icon s7-ribbon"></span><span>Manage</span></a>
                             <ul class="mai-nav-tabs-sub mai-sub-nav nav">
                                 <li class="nav-item">
-                                    <a href="{{ url('users') }}" class="nav-link">
+                                    <a href="{{ url('accounts') }}" class="nav-link">
                                         <span class="icon s7-users"></span><span class="name">Accounts</span>
                                     </a>
                                 </li>
@@ -162,8 +171,8 @@
                         <li class="nav-item parent"><a href="#" role="button" aria-expanded="false" class="nav-link"><span class="icon s7-print"></span><span>Reports</span></a>
                             <ul class="mai-nav-tabs-sub mai-sub-nav nav">
                                 <li class="nav-item">
-                                    <a href="form-elements.html" class="nav-link">
-                                        <span class="name">Elements</span>
+                                    <a href="{{ url('report/accounts') }}" class="nav-link">
+                                        <span class="icon s7-users"></span><span class="name">Accounts</span>
                                     </a>
                                 </li>
                             </ul>
@@ -187,7 +196,7 @@
         </div>
     </nav>
     <div class="main-content container">
-        <h3 class="text-center">Content goes here!</h3>
+        @yield('body')
     </div>
 </div>
 <script src="{{ asset('/') }}/assets/lib/jquery/jquery.min.js" type="text/javascript"></script>
@@ -195,6 +204,7 @@
 <script src="{{ asset('/') }}/assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 <script src="{{ asset('/') }}/assets/js/app.js" type="text/javascript"></script>
 <script src="{{ asset('/') }}/assets/lib/theme-switcher/theme-switcher.min.js" type="text/javascript"></script>
+@yield('js')
 <script type="text/javascript">
     $(document).ready(function(){
         //initialize the javascript
@@ -206,8 +216,8 @@
     $(document).ready(function(){
         App.livePreview();
     });
-
 </script>
+
 <script>
     var url = window.location.href;
     var parts = url.split('/');
