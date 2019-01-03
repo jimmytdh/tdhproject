@@ -20,6 +20,7 @@ class User extends Authenticatable
         'prof_id',
         'sec_id',
         'div_id',
+        'email'
     ];
 
     /**

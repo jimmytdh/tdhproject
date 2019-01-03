@@ -11,9 +11,12 @@ class Profile extends Model
         'mname',
         'lname',
         'ext',
+        'sex',
         'address',
+        'contact',
         'blood_type',
         'dob',
+        'hospital_id',
         'tin',
         'gsis',
         'phic',
@@ -23,7 +26,7 @@ class Profile extends Model
         'e_mname',
         'e_lname',
         'e_address',
-        'contact',
+        'e_contact',
         'picture'
     ];
 }

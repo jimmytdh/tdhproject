@@ -9,8 +9,8 @@
             <div class="panel panel-default panel-table">
                 <div class="panel-heading">{{ $title }}
                     <div class="tools">
-                        <a href="{{ url('accounts/add') }}" class="btn btn-success btn-sm">
-                            <i class="icon s7-add-user" style="color: #fff;"></i> Add Account
+                        <a href="{{ url('sections/add') }}" class="btn btn-success btn-sm">
+                            <i class="icon s7-plus" style="color: #fff;"></i> Add Section
                         </a>
 
                     </div>
@@ -18,28 +18,26 @@
                 <div class="panel-body">
                     <table id="table1" class="table table-striped table-hover table-fw-widget">
                         <thead>
-                            <tr>
-                                <th>Full Name</th>
-                                <th>Date of Birth</th>
-                                <th>Contact</th>
-                                <th>Designation</th>
-                                <th>Section</th>
-                                <th>Division</th>
-                            </tr>
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Head</th>
+                            <th># of Personnel</th>
+                            <th>Division</th>
+                        </tr>
                         </thead>
                         <tbody>
 
                         @foreach($data as $row)
                             <tr>
                                 <td>
-                                    <a href="{{ url('accounts/update/').'/'.$row->id }}">
-                                        {{ $row->lname }}, {{ $row->fname }} {{ $row->mname[0] }}. {{ $row->ext }}
+                                    <a href="{{ url('sections/update/').'/'.$row->id }}">
+                                        {{ $row->code }}
                                     </a>
                                 </td>
-                                <td>{{ date('M d, Y',strtotime($row->dob)) }}</td>
-                                <td>{{ $row->contact }}</td>
-                                <td>{{ $row->designation }}</td>
-                                <td>{{ $row->section }}</td>
+                                <td>{{ $row->name }}</td>
+                                <td>{{ $row->lname }}, {{ $row->fname }}</td>
+                                <td>{{ \App\Http\Controllers\SectionController::countPersonnel($row->id) }}</td>
                                 <td>{{ $row->division }}</td>
                             </tr>
                         @endforeach

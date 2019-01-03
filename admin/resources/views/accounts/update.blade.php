@@ -40,60 +40,60 @@
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">First Name</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="text" placeholder="First Name" name="fname" class="form-control" required="">
+                                            <input type="text" placeholder="First Name" value="{{ $data->fname }}" name="fname" class="form-control" required="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Middle Name</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="text" placeholder="Middle Name" name="mname" class="form-control" required="">
+                                            <input type="text" placeholder="Middle Name" value="{{ $data->mname }}" name="mname" class="form-control" required="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Last Name</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="text" placeholder="Last Name" name="lname" class="form-control" required="">
+                                            <input type="text" placeholder="Last Name" value="{{ $data->lname }}" name="lname" class="form-control" required="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Suffix</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="text" placeholder="Sr., Jr., III" name="ext" class="form-control">
+                                            <input type="text" placeholder="Sr., Jr., III" value="{{ $data->ext }}" name="ext" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Gender</label>
                                         <div class="col-12 col-sm-8 col-lg-6 form-check mt-3">
                                             <label class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" name="sex" checked="" value="Male" class="custom-control-input"><span class="custom-control-label">Male</span>
+                                                <input type="radio" name="sex" @if($data->sex=='Male') checked="" @endif value="Male" class="custom-control-input"><span class="custom-control-label">Male</span>
                                             </label>
                                             <label class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" name="sex" class="custom-control-input" value="Female"><span class="custom-control-label">Female</span>
+                                                <input type="radio" name="sex" @if($data->sex=='Female') checked="" @endif class="custom-control-input" value="Female"><span class="custom-control-label">Female</span>
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Complete Address</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <textarea placeholder="House No./Street/Barangay/City/Province" name="address" class="form-control" required="" rows="5" style="resize: none;"></textarea>
+                                            <textarea placeholder="House No./Street/Barangay/City/Province" name="address" class="form-control" required="" rows="5" style="resize: none;">{{ $data->address }}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Contact</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="text" data-mask="phone" placeholder="(0912) 345 6789" name="contact" class="form-control" required="">
+                                            <input type="text" data-mask="phone" placeholder="(0912) 345 6789" name="contact" value="{{ $data->contact }}" class="form-control" required="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Blood Type</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="text" placeholder="Blood Type" name="blood_type" class="form-control" required="">
+                                            <input type="text" placeholder="Blood Type" name="blood_type" value="{{ $data->blood_type }}" class="form-control" required="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Date of Birth</label>
                                         <div class="col-12 col-sm-8 col-lg-6">
-                                            <input type="text" data-mask="date" name="dob" required placeholder="MM/DD/YYYY" class="form-control">
+                                            <input type="text" data-mask="date" name="dob" value="{{ date('m/d/Y',strtotime($data->dob)) }}" required placeholder="MM/DD/YYYY" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row pt-3">
@@ -115,31 +115,31 @@
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Hospital ID</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" placeholder="Hospital ID" name="hospital_id" id="hospital_id" class="form-control" required="">
+                                        <input type="text" placeholder="Hospital ID" name="hospital_id" value="{{ $data->hospital_id }}"  id="hospital_id" class="form-control" required="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">TIN</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" placeholder="TIN" name="tin" class="form-control">
+                                        <input type="text" placeholder="TIN" name="tin" value="{{ $data->tin }}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">GSIS</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" placeholder="GSIS" name="gsis" class="form-control">
+                                        <input type="text" placeholder="GSIS" name="gsis" value="{{ $data->gsis }}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">PhilHealth</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" placeholder="PhilHealth" name="phic" class="form-control">
+                                        <input type="text" placeholder="PhilHealth" name="phic" value="{{ $data->phic }}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">PAGIBIG</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" placeholder="PAGIBIG" name="pagibig" class="form-control">
+                                        <input type="text" placeholder="PAGIBIG" name="pagibig" value="{{ $data->pagibig }}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row pt-3">
@@ -160,7 +160,7 @@
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Designation</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" placeholder="Designation" name="designation" class="form-control" required="">
+                                        <input type="text" placeholder="Designation" name="designation" value="{{ $data->designation }}" class="form-control" required="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -173,7 +173,7 @@
                                                 <optgroup label="{{ $d->name }}">
                                                     <?php $sec = \App\Section::where('div_id',$d->id)->get(); ?>
                                                     @foreach($sec as $s)
-                                                        <option value="{{ $s->id }}">{{ $s->name }}</option>
+                                                        <option value="{{ $s->id }}" @if($data->sec_id==$s->id) selected @endif>{{ $s->name }}</option>
                                                     @endforeach
                                                 </optgroup>
                                             @endforeach
@@ -198,31 +198,31 @@
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">First Name</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" placeholder="First Name" name="e_fname" class="form-control" required="">
+                                        <input type="text" placeholder="First Name" name="e_fname" value="{{ $data->e_fname }}" class="form-control" required="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Middle Name</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" placeholder="Middle Name" name="e_mname" class="form-control" required="">
+                                        <input type="text" placeholder="Middle Name" name="e_mname" value="{{ $data->e_mname }}" class="form-control" required="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Last Name</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" placeholder="Last Name" name="e_lname" class="form-control" required="">
+                                        <input type="text" placeholder="Last Name" name="e_lname" value="{{ $data->e_lname }}" class="form-control" required="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Complete Address</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <textarea placeholder="House No./Street/Barangay/City/Province" name="e_address" class="form-control" required="" rows="5" style="resize: none;"></textarea>
+                                        <textarea placeholder="House No./Street/Barangay/City/Province" name="e_address" class="form-control" required="" rows="5" style="resize: none;">{{ $data->e_address }}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Contact</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" data-mask="phone" placeholder="(0912) 345 6789" name="e_contact" class="form-control" required="">
+                                        <input type="text" data-mask="phone" placeholder="(0912) 345 6789" name="e_contact" value="{{ $data->e_contact }}" class="form-control" required="">
                                     </div>
                                 </div>
 
@@ -244,25 +244,19 @@
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Username</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="text" placeholder="Username" name="username" id="username" class="form-control" readonly>
+                                        <input type="text" placeholder="Username" name="username" id="username" value="{{ $data->username }}" class="form-control" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Email</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input type="email" placeholder="Email" name="email" class="form-control" required="">
+                                        <input type="email" placeholder="Email" name="email" value="{{ $data->email }}" class="form-control" required="">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Password</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <input id="pass1" data-parsley-minlength="4" type="password" placeholder="Password" name="password" class="form-control" required="">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Confirm Password</label>
-                                    <div class="col-12 col-sm-8 col-lg-6">
-                                        <input data-parsley-equalto="#pass1" type="password" required="" placeholder="Confirm Password" class="form-control">
+                                        <input data-parsley-minlength="4" type="password" placeholder="Password Unchanged" name="password" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group row pt-3">
@@ -354,16 +348,19 @@
                         $.map(account, function(n, i){
                             data[n.name] = n.value;
                         });
+                        var id = "{{ $data->id }}";
+                        data['prof_id'] = id;
                         data['_token'] = "{{ csrf_token() }}";
                         console.log(data);
                         $("#loader-wrapper").css('visibility','visible');
 
                         $.ajax({
-                            url: "{{ url('accounts/save') }}",
+                            url: "{{ url('accounts/update') }}",
                             type: "POST",
                             data: data,
                             success: function(data){
-                                window.location = "{{ url('accounts/add?q=added') }}";
+                                url = "{{ url('accounts/update/') }}/"+id+"?q=updated";
+                                window.location = url;
                             }
                         });
                     }
@@ -371,8 +368,8 @@
             });
         });
 
-        @if(\Illuminate\Support\Facades\Input::get('q')=='added')
-        lobibox('success','Success','Data successfully added to database!');
+        @if(\Illuminate\Support\Facades\Input::get('q')=='updated')
+        lobibox('success','Success','Data successfully updated!');
         @endif
         function lobibox(status,title,msg)
         {
