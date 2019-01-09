@@ -10,8 +10,8 @@
             <div class="panel panel-default panel-table">
                 <div class="panel-heading">{{ $title }}
                     <div class="tools">
-                        <a href="{{ url('sections/add') }}" class="btn btn-success btn-sm">
-                            <i class="icon s7-plus" style="color: #fff;"></i> Add Section
+                        <a href="{{ url('divisions/add') }}" class="btn btn-success btn-sm">
+                            <i class="icon s7-plus" style="color: #fff;"></i> Add Division
                         </a>
 
                     </div>
@@ -23,42 +23,36 @@
                             <th>Code</th>
                             <th>Name</th>
                             <th>Head</th>
+                            <th># of Sections/Departments</th>
                             <th># of Personnel</th>
-                            <th>Division</th>
                         </tr>
                         </thead>
                         <tbody>
 
                         @foreach($data as $row)
-                            <tr>
-                                <td>
-                                    <a href="{{ url('sections/update/').'/'.$row->id }}">
-                                        {{ $row->code }}
-                                    </a>
-                                </td>
-                                <td title="{{ $row->name }}">
-                                    @if(strlen($row->name) > 30)
-                                        {{ substr($row->name,0,30) }}...
-                                    @else
-                                        {{ $row->name }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if(strlen($row->lname) > 0)
+                        <tr>
+                            <td>
+                                <a href="{{ url('divisions/update/').'/'.$row->id }}">
+                                    {{ $row->code }}
+                                </a>
+                            </td>
+                            <td title="{{ $row->name }}">
+                                @if(strlen($row->name) > 30)
+                                    {{ substr($row->name,0,30) }}...
+                                @else
+                                    {{ $row->name }}
+                                @endif
+                            </td>
+                            <td>
+                                @if(strlen($row->lname) > 0)
                                     {{ $row->lname }}, {{ $row->fname }}
-                                    @else
-                                        <span class="text-danger">-- None --</span>
-                                    @endif
-                                </td>
-                                <td>{{ \App\Http\Controllers\SectionController::countPersonnel($row->id) }}</td>
-                                <td title="{{ $row->division }}">
-                                    @if(strlen($row->division) > 30)
-                                        {{ substr($row->division,0,30) }}...
-                                    @else
-                                        {{ $row->division }}
-                                    @endif
-                                </td>
-                            </tr>
+                                @else
+                                    <span class="text-danger">-- None --</span>
+                                @endif
+                            </td>
+                            <td>{{ \App\Http\Controllers\DivisionController::countSection($row->id) }}</td>
+                            <td>{{ \App\Http\Controllers\DivisionController::countPersonnel($row->id) }}</td>
+                        </tr>
                         @endforeach
                         </tbody>
                     </table>
@@ -81,7 +75,6 @@
     <script>
         App.dataTables();
     </script>
-
     <script type="text/javascript">
 
         @if(session('status')=='deleted')

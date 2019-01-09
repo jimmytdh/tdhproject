@@ -18,7 +18,7 @@ class CreateSectionsTable extends Migration
             $table->string('code');
             $table->string('name');
             $table->integer('div_id');
-            $table->integer('head_id');
+            $table->integer('head_id')->nullable();;
             $table->timestamps();
         });
     }

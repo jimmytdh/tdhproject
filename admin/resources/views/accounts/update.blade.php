@@ -31,7 +31,7 @@
                     <div class="step-content">
                         <div data-step="1" class="step-pane active">
                             <div class="container pl-sm-5">
-                                <form action="#" id="basicInfo" data-parsley-namespace="data-parsley-" data-parsley-validate="" novalidate="" class="form-horizontal group-border-dashed">
+                                <form action="#" id="basicInfo" data-parsley-namespace="data-parsley-" data-parsley-validate="" novalidate="" class="form-horizontal group-border-dashed" enctype="multipart/form-data">
                                     <div class="form-group row">
                                         <div class="offset-sm-3 col-sm-9">
                                             <h3 class="wizard-title">Basic Information</h3>
@@ -333,9 +333,14 @@
 
                         var data = {};
 
+
+                        var files = $('#picture')[0].files[0];
+                        data['picture'] = files;
+
                         $.map(basicInfo, function(n, i){
                             data[n.name] = n.value;
                         });
+
                         $.map(idNo, function(n, i){
                             data[n.name] = n.value;
                         });
@@ -380,6 +385,20 @@
                 img: "{{ url('img/logo.png') }}",
                 sound: false
             });
+        }
+    </script>
+
+    <script type="text/javascript">
+        function readProfURL(input)
+        {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#prof_pic').attr('src', e.target.result);
+                    $('#prof_pic').addClass('img-responsive');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
         }
     </script>
 @endsection

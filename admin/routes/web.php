@@ -32,6 +32,17 @@ Route::post('/accounts/update','AccountController@update');
 Route::get('/sections','SectionController@index');
 Route::get('/sections/add','SectionController@add');
 Route::post('/sections/save','SectionController@save');
+Route::get('/sections/update/{id}','SectionController@edit');
+Route::post('/sections/update','SectionController@update');
+Route::get('/sections/delete/{id}','SectionController@delete');
+
+//Manage Divisions
+Route::get('/divisions','DivisionController@index');
+Route::get('/divisions/add','DivisionController@add');
+Route::post('/divisions/save','DivisionController@save');
+Route::get('/divisions/update/{id}','DivisionController@edit');
+Route::post('/divisions/update','DivisionController@update');
+Route::get('/divisions/delete/{id}','DivisionController@delete');
 
 //Update administrator account
 Route::post('system/update','MainController@update');
@@ -39,3 +50,7 @@ Route::post('system/update','MainController@update');
 //Homepage of admin
 Route::get('/home','HomeController@index');
 
+
+Route::get('sample',function (){
+    return view('sample');
+});

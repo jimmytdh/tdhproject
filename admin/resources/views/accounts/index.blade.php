@@ -20,6 +20,7 @@
                         <thead>
                             <tr>
                                 <th>Full Name</th>
+                                <th>ID #</th>
                                 <th>Date of Birth</th>
                                 <th>Contact</th>
                                 <th>Designation</th>
@@ -36,11 +37,24 @@
                                         {{ $row->lname }}, {{ $row->fname }} {{ $row->mname[0] }}. {{ $row->ext }}
                                     </a>
                                 </td>
+                                <td>{{ $row->hospital_id }}</td>
                                 <td>{{ date('M d, Y',strtotime($row->dob)) }}</td>
                                 <td>{{ $row->contact }}</td>
                                 <td>{{ $row->designation }}</td>
-                                <td>{{ $row->section }}</td>
-                                <td>{{ $row->division }}</td>
+                                <td title="{{ $row->section }}">
+                                    @if(strlen($row->section) > 30)
+                                        {{ substr($row->section,0,30) }}...
+                                    @else
+                                        {{ $row->section }}
+                                    @endif
+                                </td>
+                                <td title="{{ $row->division }}">
+                                    @if(strlen($row->division) > 30)
+                                        {{ substr($row->division,0,30) }}...
+                                    @else
+                                        {{ $row->division }}
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

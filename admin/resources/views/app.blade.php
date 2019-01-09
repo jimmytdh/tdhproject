@@ -15,11 +15,13 @@
     <title>
         {{ (isset($title)) ? $title: 'TalisayMedSys' }}
     </title>
+    @yield('css')
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/lib/stroke-7/style.css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/lib/theme-switcher/theme-switcher.min.css"/>
-    @yield('css')
+
     <link type="text/css" href="{{ asset('/') }}/assets/css/app.css" rel="stylesheet">
+
     <style>
         body {
             background: url("{{ url('img/backdrop.png') }}"), -webkit-gradient(radial, center center, 0, center center, 460, from(#ccc), to(#ddd));
@@ -199,6 +201,7 @@
         @yield('body')
     </div>
 </div>
+@yield('modal')
 <script src="{{ asset('/') }}/assets/lib/jquery/jquery.min.js" type="text/javascript"></script>
 <script src="{{ asset('/') }}/assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
 <script src="{{ asset('/') }}/assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>

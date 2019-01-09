@@ -134,12 +134,15 @@ class AccountController extends Controller
             'e_contact' => $req->e_contact
         );
 
+
+
         Profile::where('id',$id)
             ->update($profile);
 
         $div_id = Section::find($req->section)->div_id;
 
         $user = array(
+            'username' => $req->hospital_id,
             'email' => $req->email,
             'level' => 0,
             'sec_id' => $req->section,

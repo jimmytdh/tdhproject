@@ -16,18 +16,19 @@
             <div class="panel panel-default">
                 <div class="panel-heading panel-heading-divider">{{ $title }}</div>
                 <div class="panel-body pl-sm-5">
-                    <form method="post" action="{{ url('sections/save') }}">
+                    <form method="post" action="{{ url('sections/update') }}">
                         {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{ $data->id }}" />
                         <div class="form-group row">
                             <label class="col-12 col-sm-3 col-form-label text-sm-right">Code</label>
                             <div class="col-12 col-sm-8 col-lg-6">
-                                <input type="text" name="code" required="" placeholder="Section/Department Code" class="form-control">
+                                <input type="text" name="code" value="{{ $data->code }}" required="" placeholder="Section/Department Code" class="form-control">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-12 col-sm-3 col-form-label text-sm-right">Name</label>
                             <div class="col-12 col-sm-8 col-lg-6">
-                                <input type="text" name="name" required="" placeholder="Section/Department Name" class="form-control">
+                                <input type="text" name="name" value="{{ $data->name }}" required="" placeholder="Section/Department Name" class="form-control">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -36,7 +37,7 @@
                                 <select class="select2" name="head_id">
                                     <option value="">Select Section/Department Head...</option>
                                     @foreach($profiles as $p)
-                                        <option value="{{ $p->id }}">{{ $p->lname }}, {{ $p->fname }}</option>
+                                        <option @if($p->id==$data->head_id) selected @endif value="{{ $p->id }}">{{ $p->lname }}, {{ $p->fname }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -46,8 +47,8 @@
                             <div class="col-12 col-sm-8 col-lg-6">
                                 <select class="select2" name="division" required>
                                     <option value="">Select Division...</option>
-                                    @foreach($division as $d)
-                                        <option value="{{ $d->id }}">{{ $d->name }}</option>
+                                    @foreach($divisions as $d)
+                                        <option @if($d->id==$data->div_id) selected @endif value="{{ $d->id }}">{{ $d->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -55,10 +56,34 @@
                         <div class="form-group row text-right">
                             <div class="col col-sm-10 col-lg-9 offset-sm-1 offset-lg-0">
                                 <a href="{{ url('sections') }}" class="btn btn-space btn-secondary">&nbsp;&nbsp;Back&nbsp;&nbsp; </a>
-                                <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-space btn-primary">Update</button>
+                                <button type="button" data-toggle="modal" data-target="#md-confirmation" class="btn btn-space btn-danger"> Delete </button>
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('modal')
+    <div id="md-confirmation" tabindex="-1" role="dialog" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="s7-close"></span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <h4 class="mb-3">Delete Confirmation</h4>
+                        <p>Are you sure you want to delete this section?</p>
+                        <hr />
+                        <div class="mt-2">
+                            <button type="button" data-dismiss="modal" class="btn btn-sm btn-space btn-secondary">&nbsp;&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;</button>
+                            <a href="{{ url('sections/delete/'.$data->id) }}" class="btn btn-sm btn-space btn-primary">&nbsp;&nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -82,8 +107,12 @@
         lobibox('success','Success','Data successfully added to database!');
         @endif
 
-        @if(session('status')=='added')
-        lobibox('success','Added','Section/Department added successfully!');
+        @if(session('status')=='updated')
+        lobibox('success','Updated','Section/Department updated successfully!');
+        @endif
+
+        @if(session('status')=='denied')
+        lobibox('error','Deletion Denied','Please remove all personnel under this section first!');
         @endif
 
         function lobibox(status,title,msg)
