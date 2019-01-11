@@ -27,6 +27,17 @@ Route::post('/accounts/save','AccountController@save');
 
 Route::get('/accounts/update/{id}','AccountController@edit');
 Route::post('/accounts/update','AccountController@update');
+Route::post('/accounts/upload/{id}','AccountController@upload');
+Route::get('/accounts/delete/{id}','AccountController@delete');
+
+//Manage Sections
+Route::get('/units','UnitController@index');
+Route::get('/units/add','UnitController@add');
+Route::post('/units/save','UnitController@save');
+Route::get('/units/update/{id}','UnitController@edit');
+Route::post('/units/update','UnitController@update');
+Route::get('/units/delete/{id}','UnitController@delete');
+Route::get('units/json/{sec_id}','UnitController@json');
 
 //Manage Sections
 Route::get('/sections','SectionController@index');

@@ -18,6 +18,7 @@ class User extends Authenticatable
         'username',
         'password',
         'prof_id',
+        'unit_id',
         'sec_id',
         'div_id',
         'email'

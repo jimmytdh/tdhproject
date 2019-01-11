@@ -21,7 +21,7 @@
                         <div class="form-group row">
                             <label class="col-12 col-sm-3 col-form-label text-sm-right">Code</label>
                             <div class="col-12 col-sm-8 col-lg-6">
-                                <input type="text" name="code" required="" placeholder="Section Code" class="form-control">
+                                <input autofocus type="text" name="code" required="" placeholder="Section Code" class="form-control">
                             </div>
                         </div>
                         <div class="form-group row">

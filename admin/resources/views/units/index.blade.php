@@ -10,8 +10,8 @@
             <div class="panel panel-default panel-table">
                 <div class="panel-heading">{{ $title }}
                     <div class="tools">
-                        <a href="{{ url('accounts/add') }}" class="btn btn-success btn-sm">
-                            <i class="icon s7-add-user" style="color: #fff;"></i> Add Account
+                        <a href="{{ url('units/add') }}" class="btn btn-success btn-sm">
+                            <i class="icon s7-plus" style="color: #fff;"></i> Add Unit
                         </a>
 
                     </div>
@@ -19,42 +19,45 @@
                 <div class="panel-body">
                     <table id="table1" class="table table-striped table-hover table-fw-widget">
                         <thead>
-                            <tr>
-                                <th>Full Name</th>
-                                <th>Date of Birth</th>
-                                <th>Contact</th>
-                                <th>Designation</th>
-                                <th>Unit/Section</th>
-                                <th>Division</th>
-                            </tr>
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Head</th>
+                            <th># of Personnel</th>
+                            <th>Section</th>
+                            <th>Division</th>
+                        </tr>
                         </thead>
                         <tbody>
 
                         @foreach($data as $row)
                             <tr>
                                 <td>
-                                    <a href="{{ url('accounts/update/').'/'.$row->id }}">
-                                        {{ $row->lname }}, {{ $row->fname }} {{ $row->mname[0] }}. {{ $row->ext }}
-                                    </a><br />
-                                    <small class="text-danger">{{ $row->hospital_id }}</small>
+                                    <a href="{{ url('units/update/').'/'.$row->id }}">
+                                        {{ $row->code }}
+                                    </a>
                                 </td>
-                                <td>{{ date('M d, Y',strtotime($row->dob)) }}</td>
-                                <td>{{ $row->contact }}</td>
-                                <td>{{ $row->designation }}</td>
+                                <td title="{{ $row->name }}">
+                                    @if(strlen($row->name) > 30)
+                                        {{ substr($row->name,0,30) }}...
+                                    @else
+                                        {{ $row->name }}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(strlen($row->lname) > 0)
+                                    {{ $row->lname }}, {{ $row->fname }}
+                                    @else
+                                        <span class="text-danger">-- None --</span>
+                                    @endif
+                                </td>
+                                <td>{{ \App\Http\Controllers\UnitController::countPersonnel($row->id) }}</td>
                                 <td title="{{ $row->section }}">
                                     @if(strlen($row->section) > 30)
                                         {{ substr($row->section,0,30) }}...
                                     @else
                                         {{ $row->section }}
                                     @endif
-                                    <small title="{{ $row->unit }}" class="text-danger">
-                                        <br />
-                                        @if(strlen($row->unit) > 30)
-                                            {{ substr($row->unit,0,30) }}...
-                                        @else
-                                            {{ $row->unit }}
-                                        @endif
-                                    </small>
                                 </td>
                                 <td title="{{ $row->division }}">
                                     @if(strlen($row->division) > 30)

@@ -31,6 +31,24 @@
                     <div class="step-content">
                         <div data-step="1" class="step-pane active">
                             <div class="container pl-sm-5">
+                                <form method="post" enctype="multipart/form-data" action="{{ url('accounts/upload/'.$data->id) }}">
+                                    <input type="hidden" name="prof_id" value="{{ $data->id }}" />
+                                    <input type="hidden" name="hospital_id" value="{{ $data->hospital_id }}" />
+                                    {{ csrf_field() }}
+                                <div class="form-group row">
+                                    <div class="offset-sm-3 col-sm-6">
+                                        <?php
+                                            $picture = isset($data->picture) ? $data->picture: 'default.png';
+                                        ?>
+                                        <h3>Update Picture:</h3><br />
+                                        <img id="prof_pic" src="{{ asset('upload/pictures/'.$picture) }}" width="150px" />
+                                        <br />
+                                        <input accept="image/jpeg" class="mt-3 form-control col-sm-6" type='file' name="prof_pic" onchange="readProfURL(this);" />
+                                        <button type="submit" class="btn btn-success col-sm-6">Update Picture</button>
+                                    </div>
+                                </div>
+                                <hr />
+                                </form>
                                 <form action="#" id="basicInfo" data-parsley-namespace="data-parsley-" data-parsley-validate="" novalidate="" class="form-horizontal group-border-dashed" enctype="multipart/form-data">
                                     <div class="form-group row">
                                         <div class="offset-sm-3 col-sm-9">
@@ -100,6 +118,7 @@
                                         <div class="offset-sm-3 col-sm-9">
                                             <a href="{{ url('accounts') }}" class="btn btn-secondary btn-space">Back</a>
                                             <button type="submit" data-wizard="#wizard1" class="btn btn-primary btn-space wizard-next">Proceed</button>
+                                            <button type="button" data-toggle="modal" data-target="#md-confirmation" class="btn btn-space btn-danger"> Delete </button>
                                         </div>
                                     </div>
                                 </form>
@@ -146,6 +165,7 @@
                                     <div class="offset-sm-3 col-sm-9">
                                         <button type="button" data-wizard="#wizard1" class="btn btn-secondary btn-space wizard-previous">Previous</button>
                                         <button type="submit" data-wizard="#wizard1" class="btn btn-primary btn-space wizard-next">Proceed</button>
+                                        <button type="button" data-toggle="modal" data-target="#md-confirmation" class="btn btn-space btn-danger"> Delete </button>
                                     </div>
                                 </div>
                             </form>
@@ -184,6 +204,7 @@
                                     <div class="offset-sm-3 col-sm-9">
                                         <button type="button" data-wizard="#wizard1" class="btn btn-secondary btn-space wizard-previous">Previous</button>
                                         <button type="submit" data-wizard="#wizard1" class="btn btn-primary btn-space wizard-next">Proceed</button>
+                                        <button type="button" data-toggle="modal" data-target="#md-confirmation" class="btn btn-space btn-danger"> Delete </button>
                                     </div>
                                 </div>
                             </form>
@@ -230,6 +251,7 @@
                                     <div class="offset-sm-3 col-sm-9">
                                         <button type="button" data-wizard="#wizard1" class="btn btn-secondary btn-space wizard-previous">Previous</button>
                                         <button type="submit" data-wizard="#wizard1" class="btn btn-primary btn-space wizard-next">Proceed</button>
+                                        <button type="button" data-toggle="modal" data-target="#md-confirmation" class="btn btn-space btn-danger"> Delete </button>
                                     </div>
                                 </div>
                             </form>
@@ -263,11 +285,35 @@
                                     <div class="offset-sm-3 col-sm-9">
                                         <button type="button" data-wizard="#wizard1" class="btn btn-secondary btn-space wizard-previous">Previous</button>
                                         <button type="submit" data-wizard="#wizard1" class="btn btn-primary btn-space wizard-next">Complete</button>
+                                        <button type="button" data-toggle="modal" data-target="#md-confirmation" class="btn btn-space btn-danger"> Delete </button>
                                     </div>
                                 </div>
                             </form>
                         </div>
 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('modal')
+    <div id="md-confirmation" tabindex="-1" role="dialog" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="s7-close"></span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <h4 class="mb-3">Delete Confirmation</h4>
+                        <p>Are you sure you want to delete this profile?</p>
+                        <hr />
+                        <div class="mt-2">
+                            <button type="button" data-dismiss="modal" class="btn btn-sm btn-space btn-secondary">&nbsp;&nbsp;&nbsp;No&nbsp;&nbsp;&nbsp;</button>
+                            <a href="{{ url('accounts/delete/'.$data->id) }}" class="btn btn-sm btn-space btn-primary">&nbsp;&nbsp;&nbsp;Yes&nbsp;&nbsp;&nbsp;</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -333,10 +379,6 @@
 
                         var data = {};
 
-
-                        var files = $('#picture')[0].files[0];
-                        data['picture'] = files;
-
                         $.map(basicInfo, function(n, i){
                             data[n.name] = n.value;
                         });
@@ -365,6 +407,11 @@
                             data: data,
                             success: function(data){
                                 url = "{{ url('accounts/update/') }}/"+id+"?q=updated";
+                                if(data==='userUpdateDenied')
+                                {
+                                    url = "{{ url('accounts/update/') }}/"+id+"?q=userUpdateDenied";
+                                }
+
                                 window.location = url;
                             }
                         });
@@ -376,6 +423,24 @@
         @if(\Illuminate\Support\Facades\Input::get('q')=='updated')
         lobibox('success','Success','Data successfully updated!');
         @endif
+
+        @if(\Illuminate\Support\Facades\Input::get('q')=='userUpdateDenied')
+        lobibox('info','Info','Data successfully updated but ID No. is already taken. Please assign different ID No.');
+        @endif
+
+        @if(session('status')=='unitHead')
+        lobibox('error','Deletion Denied','The current profile is a Unit Head!');
+        @endif
+
+        @if(session('status')=='sectionHead')
+        lobibox('error','Deletion Denied','The current profile is a Section Head!');
+        @endif
+
+        @if(session('status')=='divisionHead')
+        lobibox('error','Deletion Denied','The current profile is a Division Head!');
+        @endif
+
+
         function lobibox(status,title,msg)
         {
             Lobibox.notify(status, {

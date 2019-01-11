@@ -154,6 +154,11 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ url('units') }}" class="nav-link">
+                                        <span class="icon s7-science"></span><span class="name">Units</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ url('sections') }}" class="nav-link">
                                         <span class="icon s7-science"></span><span class="name">Sections</span>
                                     </a>
