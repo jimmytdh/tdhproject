@@ -186,17 +186,27 @@
                                 <div class="form-group row">
                                     <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Section</label>
                                     <div class="col-12 col-sm-8 col-lg-6">
-                                        <select class="select2" name="section" required>
+                                        <select class="select2" id="filterSection" name="section" required>
                                             <option value="">No Section...</option>
                                             <?php  $div = \App\Division::orderBy('name','asc')->get(); ?>
                                             @foreach($div as $d)
-                                                <optgroup label="{{ $d->name }}">
-                                                    <?php $sec = \App\Section::where('div_id',$d->id)->get(); ?>
-                                                    @foreach($sec as $s)
-                                                        <option value="{{ $s->id }}" @if($data->sec_id==$s->id) selected @endif>{{ $s->name }}</option>
-                                                    @endforeach
-                                                </optgroup>
+                                                <?php $sec = \App\Section::where('div_id',$d->id)->get(); ?>
+                                                @if(count($sec)>0)
+                                                    <optgroup label="{{ $d->name }}">
+                                                        @foreach($sec as $s)
+                                                            <option @if($s->id==$data->sec_id) selected @endif value="{{ $s->id }}">{{ $s->name }}</option>
+                                                        @endforeach
+                                                    </optgroup>
+                                                @endif
                                             @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-12 col-sm-3 col-form-label text-left text-sm-right">Unit <em class="text-danger">(if applicable)</em></label>
+                                    <div class="col-12 col-sm-8 col-lg-6">
+                                        <select class="select2" name="unit" id="filterUnit">
+                                            <option value="">No Unit...</option>
                                         </select>
                                     </div>
                                 </div>
@@ -464,6 +474,57 @@
                 }
                 reader.readAsDataURL(input.files[0]);
             }
+        }
+    </script>
+
+    <script type="text/javascript">
+        @if($data->sec_id)
+            var sec_id = "{{ $data->sec_id }}";
+            var data = getUnits(sec_id);
+            var unit = "{{ $data->unit_id }}";
+            populateUnits(data,unit);
+        @endif
+
+        $('#filterSection').on('change',function (data) {
+            var sec_id = $(this).val();
+            var data = getUnits(sec_id);
+            populateUnits(data);
+        });
+
+        function populateUnits(data,unit)
+        {
+            $("#loader-wrapper").css('visibility','visible');
+            $('#filterUnit').empty()
+                .append($('<option>', {
+                    value: "",
+                    text : "No Unit..."
+                }));
+            jQuery.each(data, function(i,val){
+                $('#filterUnit').append($('<option>', {
+                    value: val.id,
+                    text : val.name
+                }));
+            });
+
+            if(unit){
+                $('#filterUnit').val(unit).trigger('changed');
+            }
+            $("#loader-wrapper").css('visibility','hidden');
+        }
+
+        function getUnits(sec_id)
+        {
+                <?php echo 'var url = "'.url('units/json/').'/";';?>
+            var tmp;
+            $.ajax({
+                url: url+sec_id,
+                type: 'get',
+                async: false,
+                success : function(data){
+                    tmp = data;
+                }
+            });
+            return tmp;
         }
     </script>
 @endsection

@@ -53,7 +53,8 @@ class AccountController extends Controller
                 'profiles.*',
                 'users.username',
                 'users.email',
-                'users.sec_id'
+                'users.sec_id',
+                'users.unit_id'
             )
             ->join('profiles','profiles.id','=','users.prof_id')
             ->where('profiles.id',$id)
@@ -148,6 +149,7 @@ class AccountController extends Controller
         $user = array(
             'email' => $req->email,
             'level' => 0,
+            'unit_id' => $req->unit,
             'sec_id' => $req->section,
             'div_id' => $div_id
         );

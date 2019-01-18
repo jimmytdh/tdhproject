@@ -103,7 +103,7 @@ class UnitController extends Controller
 
     public function update(Request $req)
     {
-        $division = Section::find($req->section)->first()->div_id;
+        $division = Section::find($req->section)->div_id;
         $data = array(
             'code' => mb_strtoupper($req->code),
             'name' => ucwords(mb_strtolower($req->name)),
@@ -117,10 +117,10 @@ class UnitController extends Controller
 
         Unit::updateOrCreate($match,$data);
 
-        User::where('sec_id',$req->id)
-            ->where('div_id','!=',$req->division)
+        User::where('unit_id',$req->id)
             ->update([
-                'div_id' => $req->division
+                'sec_id' => $req->section,
+                'div_id' => $division
             ]);
 
         return redirect()->back()->with('status','updated');
