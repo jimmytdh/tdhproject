@@ -116,7 +116,7 @@
                 <div role="menu" class="dropdown-menu">
                     <a href="#" class="dropdown-item"><span class="icon s7-home"></span>My Account</a>
                     <a href="#" class="dropdown-item"> <span class="icon s7-tools"> </span>Settings</a>
-                    <a href="#" class="dropdown-item"><span class="icon s7-power"> </span>Log Out</a>
+                    <a href="{{ url('logout') }}" class="dropdown-item"><span class="icon s7-power"> </span>Log Out</a>
                 </div>
             </li>
         </ul>
