@@ -15,8 +15,21 @@
 <div class="mai-wrapper mai-login">
     <div class="main-content container">
         <div class="splash-container row">
-            <div class="col-md-6 user-message"><span class="splash-message text-right">{{ $greetings->phrase }}<br /><small style="font-size:0.8em;font-weight: 100;">~ {{ $greetings->author }}</small></span></div>
-            <div class="col-md-6 form-message"><img src="img/logo.png" alt="logo" width="120" class="logo-img mb-2"><span class="splash-description text-center mt-2 mb-5">Login to your account</span>
+            <div class="col-md-6 user-message"><span class="splash-message text-right">@if(isset($greetings->phrase)) {{ $greetings->phrase }} @endif<br /><small style="font-size:0.8em;font-weight: 100;">~ @if(isset($greetings->author)) {{ $greetings->author }} @endif</small></span></div>
+            <div class="col-md-6 form-message"><img src="img/logo.png" alt="logo" width="120" class="logo-img mb-2">
+                <span class="splash-description text-center mt-2 mb-5">Login to your account</span>
+                @if(\Illuminate\Support\Facades\Input::get('q')=='error')
+                    <div class="text-center text-danger mt-3 mb-3">
+                        Incorrect Username/Password!
+                    </div>
+                @endif
+
+                @if(\Illuminate\Support\Facades\Input::get('q')=='empty')
+                    <div class="text-center text-danger mt-3 mb-3">
+                        Username doesn't exist!
+                    </div>
+                @endif
+
                 <form method="post" action="{{ asset('login') }}">
                     {{ csrf_field() }}
                     <div class="form-group">

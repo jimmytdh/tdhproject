@@ -1,0 +1,48 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+//Homepage of admin
+Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
+
+
+Route::get('/login','MainController@login');
+Route::post('/login','MainController@validateLogin');
+Route::get('/logout', function (){
+    Session::flush();
+    return redirect('login');
+});
+
+
+
+//Manage Items
+Route::post('/item/save','ItemController@save')->middleware('admin');
+Route::post('/item/update','ItemController@update')->middleware('admin');
+Route::get('/item/edit/{id}','ItemController@edit')->middleware('admin');
+Route::get('/item/delete/{id}','ItemController@delete')->middleware('admin');
+
+//Manage Charges
+Route::get('/charges','ItemController@index')->middleware('admin');
+Route::get('/charges/generate/{id}','ItemController@generate');
+Route::post('/charges/print/{id}','ItemController@saveDraft');
+Route::get('/charges/print/{id}','ItemController@showPrint');
+Route::get('/charges/update/{id}','ItemController@updateCharges');
+
+//Manage Patients
+Route::get('/patients','PatientController@index');
+Route::post('/patient/save','PatientController@save');
+Route::post('/patients/search','PatientController@search');
+Route::get('/patient/edit/{id}','PatientController@edit');
+Route::get('/patient/delete/{id}','PatientController@delete');
+Route::post('/patient/update','PatientController@update');
+
+

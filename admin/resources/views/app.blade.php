@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from foxythemes.net/preview/products/maisonnette/pages-blank.php by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Aug 2018 01:27:51 GMT -->
+<!-- Mirrored from foxythemes.net/preview/products/maisonnette/page-blank.php by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Aug 2018 01:27:51 GMT -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -241,5 +241,5 @@
 </script>
 </body>
 
-<!-- Mirrored from foxythemes.net/preview/products/maisonnette/pages-blank.php by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Aug 2018 01:27:55 GMT -->
+<!-- Mirrored from foxythemes.net/preview/products/maisonnette/page-blank.php by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Aug 2018 01:27:55 GMT -->
 </html>
