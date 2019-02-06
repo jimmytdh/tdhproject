@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Patient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\LogController as Log;
 
 class PatientController extends Controller
 {
@@ -53,6 +54,7 @@ class PatientController extends Controller
             'status' => 0
         ]);
 
+        Log::create('Add Patient',"Added a new patient $req->fname $req->lname");
         return redirect()->back()->with('status','added');
     }
 
@@ -74,11 +76,14 @@ class PatientController extends Controller
                 'area' => $req->area
             ]);
 
+        Log::create('Update Patient',"Updated patient $req->fname $req->lname");
         return redirect()->back()->with('status','updated');
     }
 
     public function delete($id)
     {
+        $patient = Patient::find($id);
+        Log::create('Delete Patient',"Deleted patient $patient->fname $patient->lname");
         Patient::where('id',$id)->delete();
         return redirect()->back()->with('status','deleted');
     }

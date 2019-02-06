@@ -35,7 +35,7 @@
     <div class="container"><a href="#" class="navbar-brand"></a>
         <!--Left Menu-->
         <ul class="nav navbar-nav mai-top-nav">
-            <li class="nav-item"><a href="{{ url('portal') }}" class="nav-link">Portal</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Portal</a></li>
             <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">Other Systems <span class="angle-down s7-angle-down"></span></a>
                 <div role="menu" class="dropdown-menu">
                     <a href="#" class="dropdown-item">DTS</a>
@@ -96,11 +96,16 @@
                             </ul>
                         </li>
                         @if($user->level==1)
-                        <li class="nav-item parent"><a href="#" role="button" aria-expanded="false" class="nav-link"><span class="icon s7-graph3"></span><span>Logs</span></a>
+                        <li class="nav-item parent"><a href="#" role="button" aria-expanded="false" class="nav-link"><span class="icon s7-tools"></span><span>Settings</span></a>
                             <ul class="mai-nav-tabs-sub mai-sub-nav nav">
                                 <li class="nav-item">
                                     <a href="{{ url('logs') }}" class="nav-link">
                                         <span class="icon s7-search"></span><span class="name">View Logs</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('users') }}" class="nav-link">
+                                        <span class="icon s7-unlock"></span><span class="name">User Access</span>
                                     </a>
                                 </li>
                             </ul>

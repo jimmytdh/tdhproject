@@ -47,7 +47,7 @@ class ItemController extends Controller
         Item::create($data);
         Session::put('section',$req->section);
 
-        Log::create('Add',"$req->name is added");
+        Log::create('Add Item',"$req->name is added");
         return redirect()->back()->with('status','added');
     }
 
@@ -68,6 +68,7 @@ class ItemController extends Controller
         );
         $id = $req->id;
 
+        Log::create('Update Item',"$req->name is updated");
         Item::where('id',$id)
             ->update($data);
         return redirect()->back()->with('status','updated');
@@ -75,6 +76,8 @@ class ItemController extends Controller
 
     public function delete($id)
     {
+        $name = Item::find($id)->name;
+        Log::create('Delete Item',"$name is deleted");
         Item::where('id',$id)->delete();
         return redirect()->back()->with('status','deleted');
     }
@@ -135,6 +138,9 @@ class ItemController extends Controller
             ->update([
                 'status' => 1
             ]);
+        $patient = Patient::find($id);
+        $name = "$patient->fname $patient->lname";
+        Log::create('Generate Charges',"Create/update charges of $name");
         return redirect('charges/print/'.$id);
     }
 
@@ -195,7 +201,8 @@ class ItemController extends Controller
 
         $patient = Patient::find($id);
 
-
+        $name = "$patient->fname $patient->lname";
+        Log::create('Print Charges',"Print charges of $name");
         return view('page.print',[
             'title' => 'Summary of Charges',
             'id' => $id,

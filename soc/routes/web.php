@@ -45,4 +45,16 @@ Route::get('/patient/edit/{id}','PatientController@edit');
 Route::get('/patient/delete/{id}','PatientController@delete');
 Route::post('/patient/update','PatientController@update');
 
+//Manage Logs
+Route::get('/logs','LogController@index');
+Route::post('/logs/filter','LogController@filter');
+
+//Manage Users
+Route::get('/users','LoginController@index');
+Route::post('/users/save','LoginController@save');
+Route::get('/users/edit/{id}','LoginController@edit');
+Route::post('/users/update/{id}','LoginController@update');
+Route::get('/users/delete/{id}','LoginController@delete');
+Route::post('/users/search','LoginController@search');
+
 

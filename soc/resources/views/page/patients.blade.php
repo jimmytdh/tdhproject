@@ -70,7 +70,7 @@
                                                         <a href="{{ url('charges/print/'.$p->id) }}" title="Print Charges" class="dropdown-item"><i class="s7-print text-success"></i> Print</a>
                                                     @endif
                                                     <div class="dropdown-divider"></div>
-                                                    <a href="#delete_patient" data-toggle="modal" data-id="1" class="dropdown-item"><i class="s7-close text-danger"></i> Delete</a>
+                                                    <a href="#delete_patient" data-toggle="modal" data-id="{{ $p->id }}" class="dropdown-item"><i class="s7-close text-danger"></i> Delete</a>
                                                 </div>
                                             </div>
                                         </td>

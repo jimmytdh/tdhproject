@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Greeting;
+use App\Login;
 use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
@@ -77,6 +78,29 @@ class MainController extends Controller
 
             }else{
                 return redirect('/login?q=error');
+            }
+        }else{
+            $login = Login::where('username',$req->username)->first();
+            if($login)
+            {
+                if(Hash::check($req->password,$login->password))
+                {
+                    $profile = array(
+                        'fname' => $login->fname,
+                        'lname' => $login->lname,
+                        'picture' => 'logo.png'
+                    );
+                    $profile = (object)$profile;
+
+                    Session::put('user',$login);
+                    Session::put('profile',$profile);
+                    Session::put('isLogin',true);
+
+                    return redirect('/home');
+
+                }else{
+                    return redirect('/login?q=error');
+                }
             }
         }
 

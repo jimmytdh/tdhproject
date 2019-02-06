@@ -47,7 +47,7 @@
                             <input placeholder="Search items here..." autofocus type="text" id="search" class="form-control form-control-sm mr-2" />
 
                             <button type="submit" class="btn btn-info btn-sm">
-                                <i class="s7-check"></i> Submit
+                                <i class="s7-print"></i> Print
                             </button>
                         </div>
                     </div>
