@@ -64,13 +64,13 @@
                                                 <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn @if($p->status==1) btn-success @else btn-secondary @endif btn-xs d-block dropdown-toggle"><i class="s7-edit"></i> <span class="icon-dropdown s7-angle-down"></span></button>
                                                 <div class="dropdown-menu">
                                                     @if($p->status==0)
-                                                        <a href="{{ url('charges/generate/'.$p->id) }}" title="Generate Charges" class="dropdown-item"><i class="s7-next-2 text-success"></i> Generate Charges</a>
+                                                        <a href="{{ url('charges/generate/'.$p->id) }}" title="Generate Charges" class="dropdown-item"><i class="s7-next-2 text-success"></i> Generate SOA</a>
                                                     @else
-                                                        <a href="{{ url('charges/update/'.$p->id) }}" title="Update charges" class="dropdown-item"><i class="s7-note text-success"></i> Update Charges</a>
-                                                        <a href="{{ url('charges/print/'.$p->id) }}" title="Print Charges" class="dropdown-item"><i class="s7-print text-success"></i> Print</a>
+                                                        <a href="{{ url('charges/update/'.$p->id) }}" title="Update charges" class="dropdown-item"><i class="s7-note text-success"></i> Update SOA</a>
+                                                        <a href="{{ url('charges/print/'.$p->id) }}" title="Print Charges" class="dropdown-item"><i class="s7-print text-success"></i> Print SOA</a>
                                                     @endif
                                                     <div class="dropdown-divider"></div>
-                                                    <a href="#delete_patient" data-toggle="modal" data-id="{{ $p->id }}" class="dropdown-item"><i class="s7-close text-danger"></i> Delete</a>
+                                                    <a href="#delete_patient" data-toggle="modal" data-id="{{ $p->id }}" class="dropdown-item"><i class="s7-close text-danger"></i> Delete Patient</a>
                                                 </div>
                                             </div>
                                         </td>

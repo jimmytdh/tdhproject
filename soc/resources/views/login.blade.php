@@ -54,7 +54,7 @@
                         <div class="col-sm-6 pt-2 text-sm-right login-forgot-password"><a href="#">Forgot Password?</a></div>
                     </div>
                 </form>
-                <div class="out-links"><a href="#">© 2018 TalisayMedSys</a></div>
+                <div class="out-links"><a href="#">© 2018 TalisayMedSys<br/>e-SOA</a></div>
             </div>
         </div>
     </div>

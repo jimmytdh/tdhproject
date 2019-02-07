@@ -32,6 +32,7 @@ class ItemController extends Controller
             'gas' => Item::where('section','gas')->get(),
             'outsource' => Item::where('section','outsource')->get(),
             'ancillary' => Item::where('section','ancillary')->get(),
+            'title' => 'Create/Update Charges'
         ]);
     }
 

@@ -52,7 +52,7 @@
                 {{ csrf_field() }}
                 <div class="panel panel-default">
                     <div class="panel-heading panel-heading-divider">
-                        UPDATE CHARGES <small class="text-danger">[ TOTAL: <span class="total">0</span>]</small>
+                        UPDATE SOA <small class="text-danger">[ TOTAL: <span class="total">0</span>]</small>
                         <div class="tools">
                             <div class="form-group form-inline">
                                 <input placeholder="Search items here..." autofocus type="text" id="search" class="form-control form-control-sm mr-2" />

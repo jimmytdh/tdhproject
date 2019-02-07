@@ -52,8 +52,7 @@
         <ul class="nav navbar-nav float-lg-right mai-user-nav">
             <li class="dropdown nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle nav-link"> <img src="{{ $admin_url.'/upload/thumbs/'.$avatar }}"><span class="user-name">{{ $profile->fname }} {{ $profile->lname }}</span><span class="angle-down s7-angle-down"></span></a>
                 <div role="menu" class="dropdown-menu">
-                    <a href="#" class="dropdown-item"><span class="icon s7-home"></span>My Account</a>
-                    <a href="#" class="dropdown-item"> <span class="icon s7-tools"> </span>Settings</a>
+                    <a href="#" class="dropdown-item"><span class="icon s7-lock"> </span>Change Password</a>
                     <a href="{{ url('logout') }}" class="dropdown-item"><span class="icon s7-power"> </span>Log Out</a>
                 </div>
             </li>
