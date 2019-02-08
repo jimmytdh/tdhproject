@@ -32,7 +32,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading panel-heading-divider">
-                    SUMMARY OF CHARGES (Emergency/Delivery Room)<br /><small class="text-danger">[Updated: {{ $last_update }}]</small>
+                    SUMMARY OF CHARGES (Operating Room)<small class="text-danger"> <br />[Updated: {{ $last_update }}]</small>
                     <div class="tools">
                         <div class="form-group form-inline">
                             <input placeholder="Search items here..." autofocus type="text" id="search" class="form-control form-control-sm mr-2" />
@@ -49,44 +49,19 @@
                             <table border="1" width="100%">
                                 <thead class="bg-gray">
                                 <tr>
-                                    <th width="60%">FIXED CHARGES</th>
+                                    <th width="60%">OPERATING ROOM CHARGES</th>
                                     <th width="20%">AMOUNT</th>
                                     <th></th>
                                 </tr>
                                 </thead>
-                                <tbody id="fixed_data">
-                                @foreach($fixed as $row)
-                                    <tr class="search_item">
-                                        <td>
-                                            <a href="#delete_item" data-toggle="modal" data-id="{{ $row->id }}" class="text-danger"><strong>x</strong></a>
-                                            <a href="#edit_item" data-toggle="modal" class="editable" data-id="{{ $row->id }}">{{ $row->name }}</a>
-                                        </td>
-                                        <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                        <td></td>
-                                    </tr>
-                                @endforeach
-
-                                </tbody>
-                            </table>
-
-                            <table border="1" width="100%">
-                                <thead class="bg-gray">
-                                <tr>
-                                    <th width="40%">ROOM & BOARD</th>
-                                    <th width="20%">COST</th>
-                                    <th width="20%">QTY/FR<br>EQ</th>
-                                    <th>AMT</th>
-                                </tr>
-                                </thead>
                                 <tbody>
-                                @foreach($room as $row)
+                                @foreach($orcharge as $row)
                                     <tr class="search_item">
                                         <td>
                                             <a href="#delete_item" data-toggle="modal" data-id="{{ $row->id }}" class="text-danger"><strong>x</strong></a>
                                             <a href="#edit_item" data-toggle="modal" class="editable" data-id="{{ $row->id }}">{{ $row->name }}</a>
                                         </td>
                                         <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                        <td></td>
                                         <td></td>
                                     </tr>
                                 @endforeach
@@ -98,13 +73,63 @@
                                 <thead class="bg-gray">
                                 <tr>
                                     <th width="40%">PROCEDURES</th>
-                                    <th width="20%">COST</th>
-                                    <th width="20%">QTY/FR<br>EQ</th>
-                                    <th>AMT</th>
+                                    <th width="20%">CHARGE</th>
+                                    <th width="20%">QUANTITY</th>
+                                    <th>AMOUNT</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($procedure as $row)
+                                @foreach($orprocedure as $row)
+                                    <tr class="search_item">
+                                        <td>
+                                            <a href="#delete_item" data-toggle="modal" data-id="{{ $row->id }}" class="text-danger"><strong>x</strong></a>
+                                            <a href="#edit_item" data-toggle="modal" class="editable" data-id="{{ $row->id }}">{{ $row->name }}</a>
+                                        </td>
+                                        <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                @endforeach
+
+                                </tbody>
+                            </table>
+
+                            <table border="1" width="100%">
+                                <thead class="bg-gray">
+                                <tr>
+                                    <th width="40%">SUPPLIES</th>
+                                    <th width="20%">UNIT PRICE</th>
+                                    <th width="20%">QUANTITY</th>
+                                    <th>AMOUNT</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($orsupply as $row)
+                                    <tr class="search_item">
+                                        <td>
+                                            <a href="#delete_item" data-toggle="modal" data-id="{{ $row->id }}" class="text-danger"><strong>x</strong></a>
+                                            <a href="#edit_item" data-toggle="modal" class="editable" data-id="{{ $row->id }}">{{ $row->name }}</a>
+                                        </td>
+                                        <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                @endforeach
+
+                                </tbody>
+                            </table>
+
+                            <table border="1" width="100%">
+                                <thead class="bg-gray">
+                                <tr>
+                                    <th width="40%">IV FLUIDS</th>
+                                    <th width="20%">UNIT PRICE</th>
+                                    <th width="20%">QUANTITY</th>
+                                    <th>AMOUNT</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($orfluid as $row)
                                     <tr class="search_item">
                                         <td>
                                             <a href="#delete_item" data-toggle="modal" data-id="{{ $row->id }}" class="text-danger"><strong>x</strong></a>
@@ -124,14 +149,14 @@
                             <table border="1" width="100%">
                                 <thead class="bg-gray">
                                 <tr>
-                                    <th width="40%">EQUIPMENT USE</th>
-                                    <th width="20%">QTY</th>
+                                    <th width="40%">SUTURES</th>
                                     <th width="20%">UNIT PRICE</th>
+                                    <th width="20%">QUANTITY</th>
                                     <th>AMOUNT</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($equipment as $row)
+                                @foreach($orsuture as $row)
                                     <tr class="search_item">
                                         <td>
                                             <a href="#delete_item" data-toggle="modal" data-id="{{ $row->id }}" class="text-danger"><strong>x</strong></a>
@@ -149,13 +174,14 @@
                             <table border="1" width="100%">
                                 <thead class="bg-gray">
                                 <tr>
-                                    <th width="60%">MEDICAL GAS</th>
-                                    <th width="20%">PSI RATE</th>
+                                    <th width="40%">MEDICINES</th>
+                                    <th width="20%">UNIT PRICE</th>
+                                    <th width="20%">QUANTITY</th>
                                     <th>AMOUNT</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($gas as $row)
+                                @foreach($ormedicine as $row)
                                     <tr class="search_item">
                                         <td>
                                             <a href="#delete_item" data-toggle="modal" data-id="{{ $row->id }}" class="text-danger"><strong>x</strong></a>
@@ -163,48 +189,10 @@
                                         </td>
                                         <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
                                         <td></td>
+                                        <td></td>
                                     </tr>
                                 @endforeach
 
-                                </tbody>
-                            </table>
-
-                            <table border="1" width="100%">
-                                <thead class="bg-gray">
-                                <tr>
-                                    <th width="60%">OUTSOURCED PROCEDURE</th>
-                                    <th>AMOUNT</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($outsource as $row)
-                                    <tr class="search_item">
-                                        <td>
-                                            <a href="#delete_item" data-toggle="modal" data-id="{{ $row->id }}" class="text-danger"><strong>x</strong></a>
-                                            <a href="#edit_item" data-toggle="modal" class="editable" data-id="{{ $row->id }}">{{ $row->name }}</a>
-                                        </td>
-                                        <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                    </tr>
-                                @endforeach
-
-                                </tbody>
-                            </table>
-                            <table border="1" width="100%">
-                                <thead class="bg-gray">
-                                <tr>
-                                    <th width="60%">OTHER CHARGES</th>
-                                    <th>AMOUNT</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($ancillary as $row)
-                                    <tr class="search_item">
-                                        <td>
-                                            <a href="#delete_item" data-toggle="modal" data-id="{{ $row->id }}" class="text-danger"><strong>x</strong></a>
-                                            <a href="#edit_item" data-toggle="modal" class="editable" data-id="{{ $row->id }}">{{ $row->name }}</a></td>
-                                        <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                    </tr>
-                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -234,13 +222,12 @@
                         <div class="form-group">
                             <label>Section</label>
                             <select name="section" class="form-control custom-select">
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='fixed') selected @endif value="fixed">Fixed Charges</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='room') selected @endif value="room">Room & Board</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='procedure') selected @endif value="procedure">Procedures</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='equipment') selected @endif value="equipment">Equipment Use</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='gas') selected @endif value="gas">Medical Gas</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='outsource') selected @endif value="outsource">Outsourced Procedure</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='ancillary') selected @endif value="ancillary">Other Charges</option>
+                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='orcharge') selected @endif value="orcharge">Operating Room Charges</option>
+                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='orprocedure') selected @endif value="orprocedure">Procedures</option>
+                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='orsupply') selected @endif value="orsupply">Supplies</option>
+                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='orsuture') selected @endif value="orsuture">Sutures</option>
+                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='orfluid') selected @endif value="orfluid">IV Fluids</option>
+                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='ormedicine') selected @endif value="ormedicine">Medicines</option>
                             </select>
                         </div>
                         <div class="form-group mt-1">
@@ -292,14 +279,12 @@
                         <div class="form-group">
                             <label>Section</label>
                             <select name="section" id="section" class="form-control custom-select">
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='fixed') selected @endif value="fixed">Fixed Charges</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='room') selected @endif value="room">Room & Board</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='procedure') selected @endif value="procedure">Procedures</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='supplies') selected @endif value="supplies">Supplies</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='equipment') selected @endif value="equipment">Equipment Use</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='gas') selected @endif value="gas">Medical Gas</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='outsource') selected @endif value="outsource">Outsourced Procedure</option>
-                                <option @if(\Illuminate\Support\Facades\Session::get('section')=='ancillary') selected @endif value="ancillary">Other Charges</option>
+                                <option value="orcharge">Operating Room Charges</option>
+                                <option value="orprocedure">Procedures</option>
+                                <option value="orsupply">Supplies</option>
+                                <option value="orsuture">Sutures</option>
+                                <option value="orfluid">IV Fluids</option>
+                                <option value="ormedicine">Medicines</option>
                             </select>
                         </div>
                         <div class="form-group mt-1">
@@ -397,6 +382,7 @@
                     $('#name').val(data.name);
                     $('#section').val(data.section);
                     $('#amount').val(data.amount);
+                    console.log(data.section);
                     var type = data.type;
                     if(type=='day')
                         $('input[value="day"]').prop('checked',true);

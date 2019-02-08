@@ -13,6 +13,7 @@ class Patient extends Model
         'age',
         'sex',
         'status',
+        'area',
         'phic',
     ];
 }

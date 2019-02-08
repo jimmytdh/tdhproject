@@ -262,15 +262,15 @@
         });
 
         @if(session('status')=='added')
-        lobibox('success','Added','Item successfully added!');
+        lobibox('success','Added','Patient successfully added!');
         @endif
 
         @if(session('status')=='updated')
-        lobibox('success','Updated','Item successfully updated!');
+        lobibox('success','Updated','Patient successfully updated!');
         @endif
 
         @if(session('status')=='deleted')
-        lobibox('info','Deleted','Item successfully deleted!');
+        lobibox('info','Deleted','Patient successfully deleted!');
         @endif
 
         function lobibox(status,title,msg)

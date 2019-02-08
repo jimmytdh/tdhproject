@@ -32,7 +32,25 @@ class ItemController extends Controller
             'gas' => Item::where('section','gas')->get(),
             'outsource' => Item::where('section','outsource')->get(),
             'ancillary' => Item::where('section','ancillary')->get(),
-            'title' => 'Create/Update Charges'
+            'title' => 'Create/Update Charges: ER/DR'
+        ]);
+    }
+
+    public function index2()
+    {
+        $date = Item::orderBy('updated_at','desc')
+            ->first()
+            ->updated_at;
+
+        return view('page.items2',[
+            'last_update' => date('F d, Y h:i A',strtotime($date)),
+            'orcharge' => Item::where('section','orcharge')->get(),
+            'orprocedure' => Item::where('section','orprocedure')->get(),
+            'orsupply' => Item::where('section','orsupply')->get(),
+            'orsuture' => Item::where('section','orsuture')->get(),
+            'orfluid' => Item::where('section','orfluid')->get(),
+            'ormedicine' => Item::where('section','ormedicine')->get(),
+            'title' => 'Create/Update Charges: OR'
         ]);
     }
 
@@ -85,19 +103,35 @@ class ItemController extends Controller
 
     public function generate($id)
     {
+        $area = Patient::find($id)->area;
+        $page = '';
+        if($area=='ER' || $area=='DR'){
+            return view('page.generate',[
+                'id' => $id,
+                'fixed' => Item::where('section','fixed')->get(),
+                'room' => Item::where('section','room')->get(),
+                'procedure' => Item::where('section','procedure')->get(),
+                'supplies' => Item::where('section','supplies')->get(),
+                'equipment' => Item::where('section','equipment')->get(),
+                'gas' => Item::where('section','gas')->get(),
+                'outsource' => Item::where('section','outsource')->get(),
+                'ancillary' => Item::where('section','ancillary')->get(),
 
-        return view('page.generate',[
-            'id' => $id,
-            'fixed' => Item::where('section','fixed')->get(),
-            'room' => Item::where('section','room')->get(),
-            'procedure' => Item::where('section','procedure')->get(),
-            'supplies' => Item::where('section','supplies')->get(),
-            'equipment' => Item::where('section','equipment')->get(),
-            'gas' => Item::where('section','gas')->get(),
-            'outsource' => Item::where('section','outsource')->get(),
-            'ancillary' => Item::where('section','ancillary')->get(),
+            ]);
+        }
+        elseif($area=='OR'){
+            return view('page.generate2',[
+                'id' => $id,
+                'orcharge' => Item::where('section','orcharge')->get(),
+                'orprocedure' => Item::where('section','orprocedure')->get(),
+                'orsupply' => Item::where('section','orsupply')->get(),
+                'orfluid' => Item::where('section','orfluid')->get(),
+                'orsuture' => Item::where('section','orsuture')->get(),
+                'ormedicine' => Item::where('section','ormedicine')->get(),
+            ]);
+        }
 
-        ]);
+        return redirect()->back()->with('status','no_area');
     }
 
     public function updateCharges($id)
@@ -147,6 +181,42 @@ class ItemController extends Controller
 
     public function showPrint($id)
     {
+        $orcharge = Draft::join('items','items.id','=','drafts.item_id')
+                    ->where('items.section','orcharge')
+                    ->where('drafts.patient_id',$id)
+                    ->get();
+
+        $orprocedure = Draft::join('items','items.id','=','drafts.item_id')
+            ->select('drafts.qty as final_qty','items.*')
+            ->where('drafts.patient_id',$id)
+            ->where('items.section','orprocedure')
+            ->get();
+
+        $orsupply = Draft::join('items','items.id','=','drafts.item_id')
+            ->select('drafts.qty as final_qty','items.*')
+            ->where('drafts.patient_id',$id)
+            ->where('items.section','orsupply')
+            ->get();
+
+        $orsuture = Draft::join('items','items.id','=','drafts.item_id')
+            ->select('drafts.qty as final_qty','items.*')
+            ->where('drafts.patient_id',$id)
+            ->where('items.section','orsuture')
+            ->get();
+
+        $orfluid = Draft::join('items','items.id','=','drafts.item_id')
+            ->select('drafts.qty as final_qty','items.*')
+            ->where('drafts.patient_id',$id)
+            ->where('items.section','orfluid')
+            ->get();
+
+        $ormedicine = Draft::join('items','items.id','=','drafts.item_id')
+            ->select('drafts.qty as final_qty','items.*')
+            ->where('drafts.patient_id',$id)
+            ->where('items.section','ormedicine')
+            ->get();
+
+
         $fixed = Draft::join('items','items.id','=','drafts.item_id')
                     ->where('items.section','fixed')
                     ->where('drafts.patient_id',$id)
@@ -217,6 +287,12 @@ class ItemController extends Controller
             'others' => $others,
             'ancillary' => $ancillary,
             'patient' => $patient,
+            'orcharge' => $orcharge,
+            'orprocedure' => $orprocedure,
+            'orsupply' => $orsupply,
+            'orfluid' => $orfluid,
+            'orsuture' => $orsuture,
+            'ormedicine' => $ormedicine,
             'total' => 0
         ]);
     }

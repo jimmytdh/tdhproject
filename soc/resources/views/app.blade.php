@@ -88,7 +88,12 @@
                                 @if($user->level==1)
                                 <li class="nav-item">
                                     <a href="{{ url('charges') }}" class="nav-link">
-                                        <span class="icon s7-cash"></span><span class="name">Charges</span>
+                                        <span class="icon s7-cash"></span><span class="name">Charges (ER/DR)</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('orcharges') }}" class="nav-link">
+                                        <span class="icon s7-cash"></span><span class="name">Charges (OR)</span>
                                     </a>
                                 </li>
                                 @endif
@@ -163,5 +168,4 @@
 </script>
 </body>
 
-<!-- Mirrored from foxythemes.net/preview/products/maisonnette/page-blank.php by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Aug 2018 01:27:55 GMT -->
 </html>

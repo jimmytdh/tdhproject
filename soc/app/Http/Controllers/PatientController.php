@@ -43,7 +43,7 @@ class PatientController extends Controller
 
     public function save(Request $req)
     {
-        Patient::create([
+        $data = array(
             'hospital_no' => $req->hospital_no,
             'lname' => $req->lname,
             'fname' => $req->fname,
@@ -52,7 +52,8 @@ class PatientController extends Controller
             'phic' => $req->phic,
             'area' => $req->area,
             'status' => 0
-        ]);
+        );
+        Patient::create($data);
 
         Log::create('Add Patient',"Added a new patient $req->fname $req->lname");
         return redirect()->back()->with('status','added');

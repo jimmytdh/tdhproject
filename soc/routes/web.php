@@ -37,6 +37,12 @@ Route::post('/charges/print/{id}','ItemController@saveDraft');
 Route::get('/charges/print/{id}','ItemController@showPrint');
 Route::get('/charges/update/{id}','ItemController@updateCharges');
 
+Route::get('/orcharges','ItemController@index2')->middleware('admin');
+//Route::get('/charges/generate/{id}','ItemController@generate');
+//Route::post('/charges/print/{id}','ItemController@saveDraft');
+//Route::get('/charges/print/{id}','ItemController@showPrint');
+//Route::get('/charges/update/{id}','ItemController@updateCharges');
+
 //Manage Patients
 Route::get('/patients','PatientController@index');
 Route::post('/patient/save','PatientController@save');

@@ -28,6 +28,12 @@ class HomeController extends Controller
             'gas' => Item::where('section','gas')->get(),
             'outsource' => Item::where('section','outsource')->get(),
             'ancillary' => Item::where('section','ancillary')->get(),
+            'orcharge' => Item::where('section','orcharge')->get(),
+            'orprocedure' => Item::where('section','orprocedure')->get(),
+            'orsupply' => Item::where('section','orsupply')->get(),
+            'orsuture' => Item::where('section','orsuture')->get(),
+            'orfluid' => Item::where('section','orfluid')->get(),
+            'ormedicine' => Item::where('section','ormedicine')->get(),
             'title' => 'Homepage: Summary of Charges'
         ]);
     }

@@ -31,6 +31,10 @@
             position: absolute;
             right: 90px;
         }
+        .photo {
+            border-top:dashed 1px #313131;
+            margin-top: 30px;
+        }
 
         @media print {
             body * {
@@ -53,7 +57,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="mb-3">
-                <a href="{{ url('charges/update/'.$id) }}" class="btn btn-space btn-secondary"><i class="s7-back-2"></i> Back</a>
+                <a href="{{ url('charges/update/'.$id) }}" class="btn btn-space btn-secondary"><i class="s7-back-2"></i> Update Charges</a>
                 <a href="{{ url('patients') }}" class="btn btn-space btn-secondary"><i class="s7-users"></i> Patients</a>
                 <a href="#" onclick="window.print()" class="btn btn-space btn-secondary"><i class="s7-print"></i> Print</a>
             </div>
@@ -254,7 +258,7 @@
 
                             {{--ancillary--}}
                             @if(count($ancillary) > 0)
-                                <tr>
+                                <tr class="bg-gray">
                                     <th width="40%">OTHER CHARGES</th>
                                     <th width="20%">COST</th>
                                     <th width="20%" class="text-center">QTY</th>
@@ -270,6 +274,116 @@
                                     </tr>
                                 @endforeach
                             @endif
+
+                            @if(count($orcharge) > 0)
+                                <tr class="bg-gray">
+                                    <th width="40%">OPERATING ROOM CHARGES</th>
+                                    <th width="20%">COST</th>
+                                    <th width="20%" class="text-center">QTY</th>
+                                    <th></th>
+                                </tr>
+                                @foreach($orcharge as $row)
+                                    <tr>
+                                        <td>{{ $row->name }}</td>
+                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <?php $total += $row->amount; ?>
+                                    </tr>
+                                @endforeach
+                            @endif
+
+                            @if(count($orprocedure) > 0)
+                                <tr class="bg-gray">
+                                    <th width="40%">PROCEDURES</th>
+                                    <th width="20%">CHARGE</th>
+                                    <th width="20%" class="text-center">QTY</th>
+                                    <th></th>
+                                </tr>
+                                @foreach($orprocedure as $row)
+                                    <tr>
+                                        <td>{{ $row->name }}</td>
+                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <?php $total += $row->amount; ?>
+                                    </tr>
+                                @endforeach
+                            @endif
+
+                            @if(count($orsupply) > 0)
+                                <tr class="bg-gray">
+                                    <th width="40%">SUPPLIES</th>
+                                    <th width="20%">UNIT PRICE</th>
+                                    <th width="20%" class="text-center">QTY</th>
+                                    <th></th>
+                                </tr>
+                                @foreach($orsupply as $row)
+                                    <tr>
+                                        <td>{{ $row->name }}</td>
+                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <?php $total += $row->amount; ?>
+                                    </tr>
+                                @endforeach
+                            @endif
+
+                            @if(count($orsuture) > 0)
+                                <tr class="bg-gray">
+                                    <th width="40%">SUTURES</th>
+                                    <th width="20%">UNIT PRICE</th>
+                                    <th width="20%" class="text-center">QTY</th>
+                                    <th></th>
+                                </tr>
+                                @foreach($orsuture as $row)
+                                    <tr>
+                                        <td>{{ $row->name }}</td>
+                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <?php $total += $row->amount; ?>
+                                    </tr>
+                                @endforeach
+                            @endif
+
+                            @if(count($orfluid) > 0)
+                                <tr class="bg-gray">
+                                    <th width="40%">IV FLUIDS</th>
+                                    <th width="20%">UNIT PRICE</th>
+                                    <th width="20%" class="text-center">QTY</th>
+                                    <th></th>
+                                </tr>
+                                @foreach($orfluid as $row)
+                                    <tr>
+                                        <td>{{ $row->name }}</td>
+                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <?php $total += $row->amount; ?>
+                                    </tr>
+                                @endforeach
+                            @endif
+
+                            @if(count($ormedicine) > 0)
+                                <tr class="bg-gray">
+                                    <th width="40%">MEDICINES</th>
+                                    <th width="20%">UNIT PRICE</th>
+                                    <th width="20%" class="text-center">QTY</th>
+                                    <th></th>
+                                </tr>
+                                @foreach($ormedicine as $row)
+                                    <tr>
+                                        <td>{{ $row->name }}</td>
+                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <?php $total += $row->amount; ?>
+                                    </tr>
+                                @endforeach
+                            @endif
+
+
                             <tr class="bg-gray">
                                 <td colspan="3" class="text-right" style="font-size: 1.2em;"><strong>TOTAL BILL</strong></td>
                                 <td class="text-right" style="font-size: 1.2em;"><strong>{{ number_format($total,2) }}</strong></td>
@@ -281,49 +395,11 @@
                     <div class="mb-4"></div>
                     <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-5">
-                            Prepared By:
-                            <br />
-                            <br />
-                            <br />
-                            ___________________________________<br />
-                            NOD NAME & SIGNATURE <br />
-                            Date & Time Prepared: ___________________<br />
-                            <br />
-                            <br />
-                            <strong>ACKNOWLEDGEMENT:</strong>
-                            <br />
-                            <br />
-                            <br />
-                            ____________________________________________<br />
-                            Name & Signature of Patient/Representative<br />
-                            Date & Time: ____________________________<br />
-                            OR Number: ____________________________<br />
-                        </div>
-
-                        <div class="col-md-5">
-                            <strong>DOH MEDICAL ASSISTANCE PROGRAM</strong>
-                            <br />
-                            <br />
-                            Interview & Assesment Conducted By:
-                            <br />
-                            <br />
-                            __________________________________<br />
-                            Date & Time: _____________________________ <br />
-                            <br />
-                            [&nbsp;&nbsp;&nbsp;] Qualified <br />
-                            [&nbsp;&nbsp;&nbsp;] If Not, Qualified patient may avail discounts thru QFS <br />
-                            <br />
-                            MAP Amount Granted: ___________________________ <br />
-                            QFS Amount Granted: ___________________________ <br />
-                            <br />
-                            ____________________________________ <br />
-                            Medical Social Worker on Duty <br />
-                            <br />
-                            ____________________________________________________________ <br />
-                            Name & Signature of Authorized Officer for MAP Approval
+                        <div class="col-md-10">
+                            <img src="{{ url('img/signature.jpg') }}" width="100%" />
                         </div>
                     </div>
+
                     <div class="row mt-5">
                         <div class="col-md-1"></div>
                         <div class="col-md-10 text-right">
@@ -331,6 +407,15 @@
                             21 January 2019
                         </div>
                     </div>
+                    <div class="photo">
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10">
+                                <img src="{{ url('img/signature2.jpg') }}" width="100%" />
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
