@@ -12,5 +12,6 @@ class Login extends Model
         'level',
         'username',
         'password',
+        'area'
     ];
 }

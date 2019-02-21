@@ -34,8 +34,31 @@
         .photo {
             border-top:dashed 1px #313131;
             margin-top: 30px;
+            padding-top: 30px;
+            position: relative;
+        }
+        .patient_info2 {
+            position: absolute;
+            top:40px;
+            left:100px;
+            font-size: 1.2em;
+            z-index: 99999;
         }
 
+        .signature {
+            position: relative;
+        }
+        .patient_info {
+            position: absolute;
+            top:150px;
+            left:100px;
+            font-size: 1.2em;
+            z-index: 99999;
+        }
+
+        .table-signature td{
+            vertical-align: top;
+        }
         @media print {
             body * {
                 visibility: hidden;
@@ -304,9 +327,9 @@
                                     <tr>
                                         <td>{{ $row->name }}</td>
                                         <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                        <td class="text-center">1</td>
+                                        <td class="text-center">{{ $row->final_qty }}</td>
                                         <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                        <?php $total += $row->amount; ?>
+                                        <?php $total += $row->amount * $row->final_qty; ?>
                                     </tr>
                                 @endforeach
                             @endif
@@ -322,9 +345,9 @@
                                     <tr>
                                         <td>{{ $row->name }}</td>
                                         <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                        <?php $total += $row->amount; ?>
+                                        <td class="text-center">{{ $row->final_qty }}</td>
+                                        <td class="text-right">{{ number_format($row->amount * $row->final_qty,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <?php $total += ($row->amount * $row->final_qty); ?>
                                     </tr>
                                 @endforeach
                             @endif
@@ -340,9 +363,9 @@
                                     <tr>
                                         <td>{{ $row->name }}</td>
                                         <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                        <?php $total += $row->amount; ?>
+                                        <td class="text-center">{{ $row->final_qty }}</td>
+                                        <td class="text-right">{{ number_format($row->amount *  $row->final_qty,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <?php $total += ($row->amount * $row->final_qty); ?>
                                     </tr>
                                 @endforeach
                             @endif
@@ -358,9 +381,9 @@
                                     <tr>
                                         <td>{{ $row->name }}</td>
                                         <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                        <?php $total += $row->amount; ?>
+                                        <td class="text-center">{{ $row->final_qty }}</td>
+                                        <td class="text-right">{{ number_format($row->amount * $row->final_qty,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <?php $total += ($row->amount * $row->final_qty); ?>
                                     </tr>
                                 @endforeach
                             @endif
@@ -376,9 +399,9 @@
                                     <tr>
                                         <td>{{ $row->name }}</td>
                                         <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                        <td class="text-center">1</td>
-                                        <td class="text-right">{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                        <?php $total += $row->amount; ?>
+                                        <td class="text-center">{{ $row->final_qty }}</td>
+                                        <td class="text-right">{{ number_format($row->amount * $row->final_qty,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                        <?php $total += ($row->amount * $row->final_qty); ?>
                                     </tr>
                                 @endforeach
                             @endif
@@ -392,30 +415,130 @@
                         </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="mb-4"></div>
+                    {{--<div class="mb-4"></div>--}}
+                    {{--<div class="signature">--}}
+                        {{--<div class="patient_info">--}}
+                            {{--<strong>Jimmy Lomocso</strong>--}}
+                        {{--</div>--}}
+                        {{--<div class="row">--}}
+                            {{--<div class="col-md-1"></div>--}}
+                            {{--<div class="col-md-10">--}}
+                                {{--<img src="{{ url('img/signature.jpg') }}" width="100%" />--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+
+                    {{--<div class="row mt-5">--}}
+                        {{--<div class="col-md-1"></div>--}}
+                        {{--<div class="col-md-10 text-right">--}}
+                            {{--NSD-FM-19 REV.1<br />--}}
+                            {{--21 January 2019--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="photo">--}}
+                        {{--<div class="patient_info2">--}}
+                            {{--<strong>Jimmy Lomocso</strong>--}}
+                        {{--</div>--}}
+                        {{--<div class="row">--}}
+
+                            {{--<div class="col-md-1"></div>--}}
+                            {{--<div class="col-md-10">--}}
+                                {{--<img src="{{ url('img/signature2.jpg') }}" width="100%" />--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-10">
-                            <img src="{{ url('img/signature.jpg') }}" width="100%" />
+                            <table width="100%" class="table-signature">
+                                <tr>
+                                    <td width="50%">
+                                        Prepared By:<br />
+                                        <br />
+
+                                        ___________________________________<br />
+                                        NOD NAME & SIGNATURE<br />
+                                        Date & Time Prepared: <u>{{ date('m/d/Y h:i') }}</u><br />
+                                        <br />
+                                        <strong>ACKNOWLEDGEMENT</strong><br />
+                                        <br />
+                                        _______________________________________________<br />
+                                        Name & Signature of Patient/Representative<br />
+                                        Date & Time: ____________________<br />
+                                        OR Number: ____________________
+                                    </td>
+                                    <td>
+                                        <strong>DOH MEDICAL ASSISTANCE PROGRAM</strong><br />
+                                        <br />
+                                        Interview & Assessment Conducted by:<br />
+                                        <br />
+                                        __________________________________ <br />
+                                        Date & Time: _________________________ <br />
+                                        <br />
+                                        [&nbsp;&nbsp;&nbsp;] Qualified<br />
+                                        [&nbsp;&nbsp;&nbsp;] If Not, Qualified patient may avail discounts thru QFS<br />
+                                        <br />
+                                        ____________________________________________ <br />
+                                        Medical Social Worker on Duty<br />
+                                        <br />
+                                        _____________________________________________________________ <br />
+                                        Name & Signature of Authorized Officer for MAP Approval<br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-right">
+                                        <br />
+                                        <br />
+                                        NSD-FM-19 REV.1<br />
+                                        21 January 2019
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
 
-                    <div class="row mt-5">
+                    <div class="row photo">
                         <div class="col-md-1"></div>
-                        <div class="col-md-10 text-right">
-                            NSD-FM-19 REV.1<br />
-                            21 January 2019
-                        </div>
-                    </div>
-                    <div class="photo">
-                        <div class="row">
-                            <div class="col-md-1"></div>
-                            <div class="col-md-10">
-                                <img src="{{ url('img/signature2.jpg') }}" width="100%" />
-                            </div>
-                        </div>
-                    </div>
+                        <div class="col-md-10">
+                            <table width="100%" class="table-signature">
+                                <tr>
+                                    <td width="50%">
+                                       <strong>ACKNOWLEDGEMENT</strong><br />
+                                        <br />
+                                        _______________________________________________<br />
+                                        Name & Signature of Patient/Representative<br /><br />
 
+                                        Hospital Number: <u>{{ $patient->hospital_no }}</u><br />
+                                        Patient Name: <u>{{ $patient->fname }} {{ $patient->lname }}</u><br />
+                                        Age: <u>{{ $patient->age }}</u><br />
+                                        Sex: <u>{{ $patient->sex }}</u><br />
+                                        [<i class="s7-check"></i>] {{ $patient->phic }}
+                                        <br />
+                                        <br />
+                                        Date & Time: _______________________<br />
+                                        OR Number: _______________________
+                                    </td>
+                                    <td>
+                                        <strong>DOH MEDICAL ASSISTANCE PROGRAM</strong><br />
+                                        <br />
+                                        Interview & Assessment Conducted by:<br />
+                                        <br />
+                                        __________________________________ <br />
+                                        Date & Time: _________________________ <br />
+                                        <br />
+                                        [&nbsp;&nbsp;&nbsp;] Qualified<br />
+                                        [&nbsp;&nbsp;&nbsp;] If Not, Qualified patient may avail discounts thru QFS<br />
+                                        <br />
+                                        ____________________________________________ <br />
+                                        Medical Social Worker on Duty<br />
+                                        <br />
+                                        _____________________________________________________________ <br />
+                                        Name & Signature of Authorized Officer for MAP Approval<br />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

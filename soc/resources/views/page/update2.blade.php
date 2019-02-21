@@ -1,12 +1,11 @@
 <?php
-use App\Http\Controllers\ItemController as Item;
-$sub_fixed = 0;
-$sub_room = 0;
-$sub_procedure = 0;
-$sub_equipment = 0;
-$sub_gas = 0;
-$sub_outsource = 0;
-$sub_ancillary = 0;
+    use App\Http\Controllers\ItemController as Item;
+    $sub_orcharges = 0;
+    $sub_orprocedure = 0;
+    $sub_orsupply = 0;
+    $sub_orfluid = 0;
+    $sub_orsuture = 0;
+    $sub_ormedicine = 0;
 ?>
 @extends('app')
 
@@ -47,15 +46,15 @@ $sub_ancillary = 0;
             <div class="mb-3">
                 <a href="{{ url('patients') }}" class="btn btn-space btn-secondary"><i class="s7-back-2"></i> Back</a>
             </div>
-
             <form method="POST" action="{{ url('charges/print/'.$id) }}" id="formSubmit">
                 {{ csrf_field() }}
                 <div class="panel panel-default">
                     <div class="panel-heading panel-heading-divider">
-                        UPDATE SOA <small class="text-danger">[ TOTAL: <span class="total">0</span>]</small>
+                        GENERATE SOA <small class="text-danger">[ TOTAL: <span class="total">0</span>]</small>
                         <div class="tools">
                             <div class="form-group form-inline">
                                 <input placeholder="Search items here..." autofocus type="text" id="search" class="form-control form-control-sm mr-2" />
+
                                 <button type="submit" class="btn btn-info btn-sm">
                                     <i class="s7-print"></i> Print
                                 </button>
@@ -69,18 +68,17 @@ $sub_ancillary = 0;
                                 <table border="1" width="100%">
                                     <thead class="bg-gray">
                                     <tr>
-                                        <th width="60%">FIXED CHARGES</th>
+                                        <th width="60%">OPERATING ROOM CHARGES</th>
                                         <th width="20%">AMOUNT</th>
                                         <th></th>
                                     </tr>
                                     </thead>
-                                    <tbody id="fixed_data">
-                                    @foreach($fixed as $row)
+                                    <tbody>
+                                    @foreach($orcharge as $row)
                                         <?php
-
-                                        $check = Item::checkItem($id,$row->id);
-                                        if($check > -1)
-                                            $sub_fixed += $row->amount;
+                                            $check = Item::checkItem($id,$row->id);
+                                            if($check > -1)
+                                                $sub_orcharges += $row->amount;
                                         ?>
                                         <tr class="search_item">
                                             <td>
@@ -97,55 +95,12 @@ $sub_ancillary = 0;
                                                 </label>
                                             </td>
                                             <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                            <td class="fixed-{{ $row->id }}">@if($check > -1) {{ number_format($row->amount,2) }} @endif</td>
+                                            <td class="charges-{{ $row->id }}">@if($check > -1) {{ number_format($row->amount,2) }} @endif</td>
                                         </tr>
                                     @endforeach
                                     <tr>
                                         <th class="text-right" colspan="2">SUBTOTAL</th>
-                                        <th class="fixed-sub">{{ number_format($sub_fixed,2) }}</th>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-                                <table border="1" width="100%">
-                                    <thead class="bg-gray">
-                                    <tr>
-                                        <th width="40%">ROOM & BOARD</th>
-                                        <th width="20%">COST</th>
-                                        <th width="20%">QTY/FR<br>EQ</th>
-                                        <th width="20%">AMT</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($room as $row)
-                                        <?php
-                                        $check = Item::checkItem($id,$row->id);
-                                        $amount = 0;
-                                        $qty = 0;
-                                        if($check){
-                                            $amount = $row->amount * $check;
-                                            $sub_room += $amount;
-                                            $qty = $check;
-                                        }
-                                        ?>
-                                        <tr class="search_item">
-                                            <td>{{ $row->name }}</td>
-                                            <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
-                                            <td>
-                                                <input type="number"
-                                                       class="room-select"
-                                                       value="{{ $qty }}" min="0"
-                                                       name="items[{{ $row->id }}]"
-                                                       data-amount="{{ $row->amount }}"
-                                                       data-id="{{ $row->id }}"
-                                                       style="width:100%" />
-                                            </td>
-                                            <td class="room-{{ $row->id }}">{{ number_format($amount,2) }}</td>
-                                        </tr>
-                                    @endforeach
-                                    <tr>
-                                        <th class="text-right" colspan="3">SUBTOTAL</th>
-                                        <th class="room-sub">{{ number_format($sub_room,2) }}</th>
+                                        <th class="charges-sub">{{ number_format($sub_orcharges,2) }}</th>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -154,22 +109,22 @@ $sub_ancillary = 0;
                                     <thead class="bg-gray">
                                     <tr>
                                         <th width="40%">PROCEDURES</th>
-                                        <th width="20%">COST</th>
-                                        <th width="20%">QTY/FR<br>EQ</th>
-                                        <th>AMT</th>
+                                        <th width="20%">CHARGE</th>
+                                        <th width="20%">QUANTITY</th>
+                                        <th width="20%">AMOUNT</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($procedure as $row)
+                                    @foreach($orprocedure as $row)
                                         <?php
-                                        $check = Item::checkItem($id,$row->id);
-                                        $amount = 0;
-                                        $qty = 0;
-                                        if($check){
-                                            $amount = $row->amount * $check;
-                                            $sub_procedure += $amount;
-                                            $qty = $check;
-                                        }
+                                            $check = Item::checkItem($id,$row->id);
+                                            $amount = 0;
+                                            $qty = 0;
+                                            if($check){
+                                                $amount = $row->amount * $check;
+                                                $sub_orprocedure += $amount;
+                                                $qty = $check;
+                                            }
                                         ?>
                                         <tr class="search_item">
                                             <td>{{ $row->name }}</td>
@@ -183,12 +138,98 @@ $sub_ancillary = 0;
                                                        data-id="{{ $row->id }}"
                                                        style="width:100%" />
                                             </td>
-                                            <td class="procedure-{{ $row->id }}">{{ number_format($amount) }}</td>
+                                            <td class="procedure-{{ $row->id }}">{{ number_format($amount,2) }}</td>
                                         </tr>
                                     @endforeach
                                     <tr>
                                         <th class="text-right" colspan="3">SUBTOTAL</th>
-                                        <th class="procedure-sub">{{ number_format($sub_procedure) }}</th>
+                                        <th class="procedure-sub">{{ number_format($sub_orprocedure,2) }}</th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <table border="1" width="100%">
+                                    <thead class="bg-gray">
+                                    <tr>
+                                        <th width="40%">SUPPLIES</th>
+                                        <th width="20%">UNIT PRICE</th>
+                                        <th width="20%">QUANTITY</th>
+                                        <th>AMOUNT</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($orsupply as $row)
+                                        <?php
+                                            $check = Item::checkItem($id,$row->id);
+                                            $amount = 0;
+                                            $qty = 0;
+                                            if($check){
+                                                $amount = $row->amount * $check;
+                                                $sub_orsupply += $amount;
+                                                $qty = $check;
+                                            }
+                                        ?>
+                                        <tr class="search_item">
+                                            <td>{{ $row->name }}</td>
+                                            <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                            <td>
+                                                <input type="number"
+                                                       class="supply-select"
+                                                       value="{{ $qty }}" min="0"
+                                                       name="items[{{ $row->id }}]"
+                                                       data-amount="{{ $row->amount }}"
+                                                       data-id="{{ $row->id }}"
+                                                       style="width:100%" />
+                                            </td>
+                                            <td class="supply-{{ $row->id }}">{{ number_format($amount,2) }}</td>
+                                        </tr>
+                                    @endforeach
+                                    <tr>
+                                        <th class="text-right" colspan="3">SUBTOTAL</th>
+                                        <th class="supply-sub">{{ number_format($sub_orsupply,2) }}</th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <table border="1" width="100%">
+                                    <thead class="bg-gray">
+                                    <tr>
+                                        <th width="40%">IV FLUIDS</th>
+                                        <th width="20%">UNIT PRICE</th>
+                                        <th width="20%">QUANTITY</th>
+                                        <th>AMOUNT</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($orfluid as $row)
+                                        <?php
+                                            $check = Item::checkItem($id,$row->id);
+                                            $amount = 0;
+                                            $qty = 0;
+                                            if($check){
+                                                $amount = $row->amount * $check;
+                                                $sub_orfluid += $amount;
+                                                $qty = $check;
+                                            }
+                                        ?>
+                                        <tr class="search_item">
+                                            <td>{{ $row->name }}</td>
+                                            <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
+                                            <td>
+                                                <input type="number"
+                                                       class="fluid-select"
+                                                       value="{{ $qty }}" min="0"
+                                                       name="items[{{ $row->id }}]"
+                                                       data-amount="{{ $row->amount }}"
+                                                       data-id="{{ $row->id }}"
+                                                       style="width:100%" />
+                                            </td>
+                                            <td class="fluid-{{ $row->id }}">{{ number_format($amount,2) }}</td>
+                                        </tr>
+                                    @endforeach
+                                    <tr>
+                                        <th class="text-right" colspan="3">SUBTOTAL</th>
+                                        <th class="fluid-sub">{{ number_format($sub_orfluid,2) }}</th>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -197,42 +238,42 @@ $sub_ancillary = 0;
                                 <table border="1" width="100%">
                                     <thead class="bg-gray">
                                     <tr>
-                                        <th width="40%">EQUIPMENT USE</th>
-                                        <th width="20%">QTY</th>
+                                        <th width="40%">SUTURES</th>
                                         <th width="20%">UNIT PRICE</th>
+                                        <th width="20%">QUANTITY</th>
                                         <th>AMOUNT</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($equipment as $row)
+                                    @foreach($orsuture as $row)
                                         <?php
-                                        $check = Item::checkItem($id,$row->id);
-                                        $amount = 0;
-                                        $qty = 0;
-                                        if($check){
-                                            $amount = $row->amount * $check;
-                                            $sub_equipment += $amount;
-                                            $qty = $check;
-                                        }
+                                            $check = Item::checkItem($id,$row->id);
+                                            $amount = 0;
+                                            $qty = 0;
+                                            if($check){
+                                                $amount = $row->amount * $check;
+                                                $sub_orsuture += $amount;
+                                                $qty = $check;
+                                            }
                                         ?>
                                         <tr class="search_item">
                                             <td>{{ $row->name }}</td>
                                             <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
                                             <td>
                                                 <input type="number"
-                                                       class="equipment-select"
+                                                       class="suture-select"
                                                        value="{{ $qty }}" min="0"
                                                        name="items[{{ $row->id }}]"
                                                        data-amount="{{ $row->amount }}"
                                                        data-id="{{ $row->id }}"
                                                        style="width:100%" />
                                             </td>
-                                            <td class="equipment-{{ $row->id }}">{{ number_format($amount) }}</td>
+                                            <td class="suture-{{ $row->id }}">{{ number_format($amount,2) }}</td>
                                         </tr>
                                     @endforeach
                                     <tr>
                                         <th class="text-right" colspan="3">SUBTOTAL</th>
-                                        <th class="equipment-sub">{{ number_format($sub_equipment) }}</th>
+                                        <th class="suture-sub">{{ number_format($sub_orsuture,2) }}</th>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -240,113 +281,42 @@ $sub_ancillary = 0;
                                 <table border="1" width="100%">
                                     <thead class="bg-gray">
                                     <tr>
-                                        <th width="60%">MEDICAL GAS</th>
-                                        <th width="20%">PSI RATE</th>
+                                        <th width="40%">MEDICINES</th>
+                                        <th width="20%">UNIT PRICE</th>
+                                        <th width="20%">QUANTITY</th>
                                         <th>AMOUNT</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($gas as $row)
+                                    @foreach($ormedicine as $row)
                                         <?php
-                                        $check = Item::checkItem($id,$row->id);
-                                        $amount = 0;
-                                        $qty = 0;
-                                        if($check){
-                                            $amount = .50 * $check;
-                                            $sub_gas += $amount;
-                                            $qty = $check;
-                                        }
+                                            $check = Item::checkItem($id,$row->id);
+                                            $amount = 0;
+                                            $qty = 0;
+                                            if($check){
+                                                $amount = $row->amount * $check;
+                                                $sub_ormedicine += $amount;
+                                                $qty = $check;
+                                            }
                                         ?>
                                         <tr class="search_item">
                                             <td>{{ $row->name }}</td>
+                                            <td>{{ number_format($row->amount,2) }}@if(strlen($row->type)>1)/{{ $row->type }} @endif</td>
                                             <td>
                                                 <input type="number"
-                                                       class="gas-select"
+                                                       class="medicine-select"
                                                        value="{{ $qty }}" min="0"
                                                        name="items[{{ $row->id }}]"
-                                                       data-amount=".50"
+                                                       data-amount="{{ $row->amount }}"
                                                        data-id="{{ $row->id }}"
                                                        style="width:100%" />
                                             </td>
-                                            <td class="gas-{{ $row->id }}">{{ number_format($amount,1) }}</td>
+                                            <td class="medicine-{{ $row->id }}">{{ number_format($amount,2) }}</td>
                                         </tr>
                                     @endforeach
                                     <tr>
-                                        <th class="text-right" colspan="2">SUBTOTAL</th>
-                                        <th class="gas-sub">{{ number_format($sub_gas,1) }}</th>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-                                <table border="1" width="100%">
-                                    <thead class="bg-gray">
-                                    <tr>
-                                        <th width="60%">OUTSOURCED PROCEDURE</th>
-                                        <th>AMOUNT</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($outsource as $row)
-                                        <?php
-                                        $check = Item::checkItem($id,$row->id);
-                                        $amount = 0;
-                                        if($check){
-                                            $amount = $check;
-                                            $sub_outsource += $amount;
-                                        }
-                                        ?>
-                                        <tr class="search_item">
-                                            <td>{{ $row->name }}</td>
-                                            <td>
-                                                <input type="number"
-                                                       class="outsource-select"
-                                                       value="{{ number_format($amount,2) }}" min="0"
-                                                       name="items[{{ $row->id }}]"
-                                                       data-id="{{ $row->id }}"
-                                                       step="any"
-                                                       style="width:100%" />
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    <tr>
-                                        <th class="text-right" colspan="1">SUBTOTAL</th>
-                                        <th class="outsource-sub">{{ number_format($sub_outsource,2) }}</th>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table border="1" width="100%">
-                                    <thead class="bg-gray">
-                                    <tr>
-                                        <th width="60%">OTHER CHARGES</th>
-                                        <th>AMOUNT</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($ancillary as $row)
-                                        <?php
-                                        $check = Item::checkItem($id,$row->id);
-                                        $amount = 0;
-                                        if($check){
-                                            $amount = $check;
-                                            $sub_ancillary += $amount;
-                                        }
-                                        ?>
-                                        <tr class="search_item">
-                                            <td>{{ $row->name }}</td>
-                                            <td>
-                                                <input type="number"
-                                                       class="others-select"
-                                                       value="{{ number_format($amount,2) }}" min="0"
-                                                       name="items[{{ $row->id }}]"
-                                                       data-id="{{ $row->id }}"
-                                                       step="any"
-                                                       style="width:100%" />
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    <tr>
-                                        <th class="text-right" colspan="1">SUBTOTAL</th>
-                                        <th class="others-sub">{{ number_format($sub_ancillary,2) }}</th>
+                                        <th class="text-right" colspan="3">SUBTOTAL</th>
+                                        <th class="medicine-sub">{{ number_format($sub_ormedicine,2) }}</th>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -365,71 +335,59 @@ $sub_ancillary = 0;
 
 @section('js')
     <script type="text/javascript">
-        var sub_fixed = parseFloat("{{ $sub_fixed }}");
-        var sub_room = parseFloat("{{ $sub_room }}");
-        var sub_procedure = parseFloat("{{ $sub_procedure }}");
-        var sub_equipment = parseFloat("{{ $sub_equipment }}");
-        var sub_gas = parseFloat("{{ $sub_gas }}");
-        var sub_outsource = parseFloat("{{ $sub_outsource }}");
-        var sub_others = parseFloat("{{ $sub_ancillary }}");
+        var sub_charges = parseFloat("{{ $sub_orcharges }}");
+        var sub_procedure = parseFloat("{{ $sub_orprocedure }}");
+        var sub_supply = parseFloat("{{ $sub_orsupply }}");
+        var sub_fluid = parseFloat("{{ $sub_orfluid }}");
+        var sub_suture = parseFloat("{{ $sub_orsuture }}");
+        var sub_medicine = parseFloat("{{ $sub_ormedicine }}");
 
         totalAmount();
-
-        var rooms = [];
-        var procedure = [];
-        var equipment = [];
-        var gas = [];
-        var outsource = [];
-        var others = [];
 
         $('input[type="checkbox"]').change(function () {
             var amount = $(this).data('amount');
             var cl = $(this).data('class');
             if(this.checked){
                 $('.'+cl).html(decimal(amount));
-                sub_fixed = sub_fixed + parseInt(amount);
+                sub_charges = sub_charges + parseInt(amount);
 
             }else{
                 $('.'+cl).html(decimal(''));
-                sub_fixed = sub_fixed - parseInt(amount);
+                sub_charges = sub_charges - parseInt(amount);
             }
-            $('.fixed-sub').html(decimal(sub_fixed));
+            $('.charges-sub').html(decimal(sub_charges));
             totalAmount();
         });
 
-
-        $('.room-select').on('keyup change',function () {
-            sub_room = 0;
-            getData('room');
-        });
 
         $('.procedure-select').on('keyup change',function () {
             sub_procedure = 0;
             getData('procedure');
         });
 
-        $('.equipment-select').on('keyup change',function () {
-            sub_equipment = 0;
-            getData('equipment');
+        $('.supply-select').on('keyup change',function () {
+            sub_supply = 0;
+            getData('supply');
         });
 
-        $('.gas-select').on('keyup change',function () {
-            sub_gas = 0;
-            getData('gas');
+        $('.fluid-select').on('keyup change',function () {
+            sub_fluid = 0;
+            getData('fluid');
         });
 
-        $('.outsource-select').on('keyup change',function () {
-            sub_outsource = 0;
-            getData2('outsource');
+        $('.suture-select').on('keyup change',function () {
+            sub_suture = 0;
+            getData('suture');
         });
 
-        $('.others-select').on('keyup change',function () {
-            sub_others = 0;
-            getData2('others');
+        $('.medicine-select').on('keyup change',function () {
+            sub_medicine = 0;
+            getData('medicine');
         });
+
 
         function totalAmount() {
-            var total = sub_fixed + sub_room + sub_procedure + sub_equipment + sub_gas + sub_outsource + sub_others;
+            var total = sub_charges + sub_procedure + sub_supply + sub_fluid + sub_suture + sub_medicine;
             $('.total').html(decimal(total));
         }
 
@@ -448,30 +406,26 @@ $sub_ancillary = 0;
                 var total = amount * qty;
                 var id = $(this).data('id');
 
-                if(section=='room'){
-                    sub_room += total;
-                    $('.room-'+id).html(decimal(total));
-                    $('.room-sub').html(decimal(sub_room));
-                }else if(section=='procedure'){
+                if(section=='procedure'){
                     sub_procedure += total;
                     $('.procedure-'+id).html(decimal(total));
                     $('.procedure-sub').html(decimal(sub_procedure));
-                }else if(section=='equipment'){
-                    sub_equipment += total;
-                    $('.equipment-'+id).html(decimal(total));
-                    $('.equipment-sub').html(decimal(sub_equipment));
-                }else if(section=='gas'){
-                    sub_gas += total;
-                    $('.gas-'+id).html(decimal(total));
-                    $('.gas-sub').html(decimal(sub_gas));
-                }else if(section=='outsource'){
-                    sub_outsource += total;
-                    $('.outsource-'+id).html(decimal(total));
-                    $('.outsource-sub').html(decimal(sub_outsource));
-                }else if(section=='others'){
-                    sub_others += total;
-                    $('.others-'+id).html(decimal(total));
-                    $('.others-sub').html(decimal(sub_others));
+                }else if(section=='supply'){
+                    sub_supply += total;
+                    $('.supply-'+id).html(decimal(total));
+                    $('.supply-sub').html(decimal(sub_supply));
+                }else if(section=='fluid'){
+                    sub_fluid += total;
+                    $('.fluid-'+id).html(decimal(total));
+                    $('.fluid-sub').html(decimal(sub_fluid));
+                }else if(section=='suture'){
+                    sub_suture += total;
+                    $('.suture-'+id).html(decimal(total));
+                    $('.suture-sub').html(decimal(sub_suture));
+                }else if(section=='medicine'){
+                    sub_medicine += total;
+                    $('.medicine-'+id).html(decimal(total));
+                    $('.medicine-sub').html(decimal(sub_medicine));
                 }
             });
             totalAmount();

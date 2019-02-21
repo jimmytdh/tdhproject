@@ -54,6 +54,20 @@ class ItemController extends Controller
         ]);
     }
 
+    public function index3()
+    {
+        $date = Item::orderBy('updated_at','desc')
+            ->first()
+            ->updated_at;
+
+        return view('page.items3',[
+            'last_update' => date('F d, Y h:i A',strtotime($date)),
+            'charges' => Item::where('section','opdcharges')->get(),
+            'others' => Item::where('section','opdothers')->get(),
+            'title' => 'Create/Update Charges: OPD'
+        ]);
+    }
+
     public function save(Request $req)
     {
         $data = array(
@@ -130,26 +144,56 @@ class ItemController extends Controller
                 'ormedicine' => Item::where('section','ormedicine')->get(),
             ]);
         }
+        elseif($area=='OPD'){
+            return view('page.generate3',[
+                'id' => $id,
+                'opdcharges' => Item::where('section','opdcharges')->get(),
+                'opdothers' => Item::where('section','opdothers')->get()
+            ]);
+        }
 
         return redirect()->back()->with('status','no_area');
     }
 
     public function updateCharges($id)
     {
+        $area = Patient::find($id)->area;
 
-        return view('page.update',[
-            'title' => 'Update Charges',
-            'id' => $id,
-            'fixed' => Item::where('section','fixed')->get(),
-            'room' => Item::where('section','room')->get(),
-            'procedure' => Item::where('section','procedure')->get(),
-            'supplies' => Item::where('section','supplies')->get(),
-            'equipment' => Item::where('section','equipment')->get(),
-            'gas' => Item::where('section','gas')->get(),
-            'outsource' => Item::where('section','outsource')->get(),
-            'ancillary' => Item::where('section','ancillary')->get(),
+        if($area=='ER' || $area=='DR')
+        {
+            return view('page.update',[
+                'title' => 'Update Charges',
+                'id' => $id,
+                'fixed' => Item::where('section','fixed')->get(),
+                'room' => Item::where('section','room')->get(),
+                'procedure' => Item::where('section','procedure')->get(),
+                'supplies' => Item::where('section','supplies')->get(),
+                'equipment' => Item::where('section','equipment')->get(),
+                'gas' => Item::where('section','gas')->get(),
+                'outsource' => Item::where('section','outsource')->get(),
+                'ancillary' => Item::where('section','ancillary')->get(),
 
-        ]);
+            ]);
+        }else if($area=='OR'){
+            return view('page.update2',[
+                'title' => 'Update Charges',
+                'id' => $id,
+                'orcharge' => Item::where('section','orcharge')->get(),
+                'orprocedure' => Item::where('section','orprocedure')->get(),
+                'orsupply' => Item::where('section','orsupply')->get(),
+                'orfluid' => Item::where('section','orfluid')->get(),
+                'orsuture' => Item::where('section','orsuture')->get(),
+                'ormedicine' => Item::where('section','ormedicine')->get(),
+
+            ]);
+        }else if($area=='OPD'){
+            return view('page.update3',[
+                'title' => 'Update Charges',
+                'id' => $id,
+                'opdcharges' => Item::where('section','opdcharges')->get(),
+                'opdothers' => Item::where('section','opdothers')->get()
+            ]);
+        }
     }
 
     public function saveDraft(Request $req,$id)
@@ -179,8 +223,28 @@ class ItemController extends Controller
         return redirect('charges/print/'.$id);
     }
 
+    static function getAmount($patient_id, $item_id)
+    {
+        $draft = Draft::where('patient_id',$patient_id)
+                    ->where('item_id',$item_id)
+                    ->first();
+        if($draft){
+            if($draft->qty==0){
+                return Item::find($item_id)->amount;
+            }
+            return $draft->qty;
+        }
+
+
+        return null;
+    }
+
     public function showPrint($id)
     {
+        $area = Patient::find($id)->area;
+        if($area=='OPD')
+            return redirect('/print/opd/'.$id);
+
         $orcharge = Draft::join('items','items.id','=','drafts.item_id')
                     ->where('items.section','orcharge')
                     ->where('drafts.patient_id',$id)

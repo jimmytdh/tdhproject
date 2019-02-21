@@ -68,6 +68,20 @@ return [
             'strict' => false,
             'engine' => null,
         ],
+        'homis' => [
+            'driver' => 'mysql',
+            'host' => '192.168.10.3',
+            'port' => '3306',
+            'database' => 'hospital_dbo',
+            'username' => 'root',
+            'password' => 'root',
+            'unix_socket' => '',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',

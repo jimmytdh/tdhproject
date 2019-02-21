@@ -51,6 +51,16 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>Area</label>
+                            <select class="form-control custom-select" name="area">
+                                <option value="all" @if($info->level=="all") selected @endif>All Access</option>
+                                <option value="er" @if($info->level=="er") selected @endif>Emergency Room</option>
+                                <option value="dr" @if($info->level=="dr") selected @endif>Delivery Room</option>
+                                <option value="or" @if($info->level=="or") selected @endif>Operating Room</option>
+                                <option value="opd" @if($info->level=="opd") selected @endif>Out-Patient Department</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>Username</label>
                             <input class="form-control" value="{{ $info->username }}" type="text" name="username" placeholder="Username" autocomplete="none" required>
                         </div>
@@ -87,6 +97,16 @@
                             <select class="form-control custom-select" name="level">
                                 <option value="0">Standard</option>
                                 <option value="1">Admin</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Area</label>
+                            <select class="form-control custom-select" name="area">
+                                <option value="all">All Access</option>
+                                <option value="er">Emergency Room</option>
+                                <option value="dr">Delivery Room</option>
+                                <option value="or">Operating Room</option>
+                                <option value="opd">Out-Patient Department</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -127,6 +147,7 @@
                             <th>Last Name</th>
                             <th>First Name</th>
                             <th>Username</th>
+                            <th>Area</th>
                             <th>Access Level</th>
                         </tr>
                         </thead>
@@ -138,8 +159,9 @@
                                    {{ $row->lname }}
                                 </a>
                             </td>
-                            <td>{{ $row->lname }}</td>
+                            <td>{{ $row->fname }}</td>
                             <td>{{ $row->username }}</td>
+                            <td class="text-center">{{ strtoupper($row->area) }}</td>
                             <td>
                                 @if($row->level==0)
                                     <span class="text-danger">Standard</span>

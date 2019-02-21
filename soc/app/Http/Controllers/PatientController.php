@@ -16,8 +16,16 @@ class PatientController extends Controller
 
     public function index()
     {
+        $user = Session::get('user');
         $keyword = Session::get('search_patient');
-        $patients = Patient::orderBy('id','desc');
+
+        $sort = Session::get('sort');
+
+        $patients = Patient::select('*');
+        if($user->level == 0)
+        {
+            $patients = $patients->where('area',strtoupper($user->area));
+        }
         if($keyword)
         {
             $patients = $patients->where(function($q) use ($keyword) {
@@ -26,6 +34,12 @@ class PatientController extends Controller
                         ->orwhere('hospital_no','like',"%$keyword%");
                 });
         }
+
+        if($sort)
+        {
+            $patients = $patients->orderBy($sort->name,$sort->order);
+        }
+
         $patients = $patients->paginate(20);
         return view('page.patients',[
             'title' => 'List of Patients',
@@ -39,6 +53,36 @@ class PatientController extends Controller
     {
         Session::put('search_patient',$req->search);
         return redirect('patients');
+    }
+
+    public function sort($sort)
+    {
+        $session = Session::get('sort');
+        $data = array(
+            'name' => $sort,
+            'order' => 'asc'
+        );
+        if($session)
+        {
+            if($session->name==$sort){
+                if($session->order=='asc'){
+                    $data = array(
+                        'name' => $sort,
+                        'order' => 'desc'
+                    );
+                }else{
+                    $data = array(
+                        'name' => $sort,
+                        'order' => 'asc'
+                    );
+                }
+            }
+        }
+        $data = (object)$data;
+        Session::put('sort',$data);
+
+        print_r($data->order);
+        return redirect('/patients');
     }
 
     public function save(Request $req)

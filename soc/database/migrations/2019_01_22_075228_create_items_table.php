@@ -17,7 +17,7 @@ class CreateItemsTable extends Migration
             $table->increments('id');
             $table->string('section');
             $table->string('name');
-            $table->integer('amount');
+            $table->float('amount');
             $table->integer('type');
             $table->timestamps();
         });

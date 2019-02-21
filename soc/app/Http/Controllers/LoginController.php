@@ -82,7 +82,8 @@ class LoginController extends Controller
             'lname' => $req->lname,
             'level' => $req->level,
             'username' => $req->username,
-            'password' => bcrypt($req->password)
+            'password' => bcrypt($req->password),
+            'area' => $req->area
         );
 
         Login::create($data);
@@ -108,7 +109,8 @@ class LoginController extends Controller
             'fname' => $req->fname,
             'lname' => $req->lname,
             'level' => $req->level,
-            'username' => $req->username
+            'username' => $req->username,
+            'area' => $req->area
         );
 
         if($req->password)

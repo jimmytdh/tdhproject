@@ -70,6 +70,7 @@ class MainController extends Controller
             if(Hash::check($req->password,$login->password))
             {
                 $profile = Profile::find($login->prof_id);
+                $login->area = 'all';
                 Session::put('user',$login);
                 Session::put('profile',$profile);
                 Session::put('isLogin',true);

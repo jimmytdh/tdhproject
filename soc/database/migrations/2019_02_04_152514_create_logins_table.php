@@ -20,6 +20,7 @@ class CreateLoginsTable extends Migration
             $table->integer('level');
             $table->string('username');
             $table->string('password');
+            $table->string('area');
             $table->timestamps();
         });
     }

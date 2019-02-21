@@ -77,7 +77,6 @@
                                     <tbody id="fixed_data">
                                     @foreach($fixed as $row)
                                         <?php
-
                                             $check = Item::checkItem($id,$row->id);
                                             if($check > -1)
                                                 $sub_fixed += $row->amount;

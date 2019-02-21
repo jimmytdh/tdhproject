@@ -260,6 +260,9 @@
                             <label class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" value="pc" name="type" class="custom-control-input is-valid"><span class="custom-control-label">/pc</span>
                             </label>
+                            <label class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" value="hr" name="type" class="custom-control-input is-valid"><span class="custom-control-label">/hr</span>
+                            </label>
                         </div>
                         <div class="text-center">
                             <hr />
@@ -318,6 +321,9 @@
                             </label>
                             <label class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" value="pc" name="type" class="custom-control-input is-valid"><span class="custom-control-label">/pc</span>
+                            </label>
+                            <label class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" value="hr" name="type" class="custom-control-input is-valid"><span class="custom-control-label">/hr</span>
                             </label>
                         </div>
                         <div class="text-center">
