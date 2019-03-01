@@ -115,7 +115,18 @@
 
                                 <tr>
                                     <td width="37%">Patient Name : <strong>{{ $patient->lname }}, {{ $patient->fname }}</strong></td>
-                                    <td>Age : <strong>{{ $patient->age }}</strong></td>
+                                    <td>Age : <strong>
+                                            <?php
+                                            $age = $patient->age;
+                                            $ext = '';
+                                            if($age < 0)
+                                            {
+                                                $age = $age * -1;
+                                                $ext = ' m/o';
+                                            }
+                                            ?>
+                                            {{ $age }} {{ $ext }}
+                                        </strong></td>
                                     <td>Sex : <strong>{{ $patient->sex }}</strong></td>
                                     <td>Area:
                                         <strong>

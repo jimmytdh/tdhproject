@@ -20,43 +20,45 @@
     $class6 = '';
     $icon6 = '';
 
-    if($sort->name=='hospital_no')
-    {
-        $class1 = 'bg-highlight';
-        if($sort->order=='asc')
-            $icon1 = 's7-bottom-arrow';
-        else
-            $icon1 = 's7-up-arrow';
-    }else if($sort->name=='lname'){
-        $class2 = 'bg-highlight';
-        if($sort->order=='asc')
-            $icon2 = 's7-bottom-arrow';
-        else
-            $icon2 = 's7-up-arrow';
-    }else if($sort->name=='age'){
-        $class3 = 'bg-highlight';
-        if($sort->order=='asc')
-            $icon3 = 's7-bottom-arrow';
-        else
-            $icon3 = 's7-up-arrow';
-    }else if($sort->name=='sex'){
-        $class4 = 'bg-highlight';
-        if($sort->order=='asc')
-            $icon4 = 's7-bottom-arrow';
-        else
-            $icon4 = 's7-up-arrow';
-    }else if($sort->name=='phic'){
-        $class5 = 'bg-highlight';
-        if($sort->order=='asc')
-            $icon5 = 's7-bottom-arrow';
-        else
-            $icon5 = 's7-up-arrow';
-    }else if($sort->name=='created_at'){
-        $class6 = 'bg-highlight';
-        if($sort->order=='asc')
-            $icon6 = 's7-bottom-arrow';
-        else
-            $icon6 = 's7-up-arrow';
+    if($sort){
+        if($sort->name=='hospital_no')
+        {
+            $class1 = 'bg-highlight';
+            if($sort->order=='asc')
+                $icon1 = 's7-bottom-arrow';
+            else
+                $icon1 = 's7-up-arrow';
+        }else if($sort->name=='lname'){
+            $class2 = 'bg-highlight';
+            if($sort->order=='asc')
+                $icon2 = 's7-bottom-arrow';
+            else
+                $icon2 = 's7-up-arrow';
+        }else if($sort->name=='age'){
+            $class3 = 'bg-highlight';
+            if($sort->order=='asc')
+                $icon3 = 's7-bottom-arrow';
+            else
+                $icon3 = 's7-up-arrow';
+        }else if($sort->name=='sex'){
+            $class4 = 'bg-highlight';
+            if($sort->order=='asc')
+                $icon4 = 's7-bottom-arrow';
+            else
+                $icon4 = 's7-up-arrow';
+        }else if($sort->name=='phic'){
+            $class5 = 'bg-highlight';
+            if($sort->order=='asc')
+                $icon5 = 's7-bottom-arrow';
+            else
+                $icon5 = 's7-up-arrow';
+        }else if($sort->name=='created_at'){
+            $class6 = 'bg-highlight';
+            if($sort->order=='asc')
+                $icon6 = 's7-bottom-arrow';
+            else
+                $icon6 = 's7-up-arrow';
+        }
     }
 ?>
 
@@ -150,7 +152,18 @@
                                             </a>
                                         </td>
                                         <td class="{{ $class2 }}">{{ $p->lname }}, {{ $p->fname }}</td>
-                                        <td class="text-center {{ $class3 }}">{{ $p->age }}</td>
+                                        <td class="text-center {{ $class3 }}">
+                                            <?php
+                                                $age = $p->age;
+                                                $ext = '';
+                                                if($age < 0)
+                                                {
+                                                    $age = $age * -1;
+                                                    $ext = ' m/o';
+                                                }
+                                            ?>
+                                            {{ $age }} {{ $ext }}
+                                        </td>
                                         <td class="{{ $class4 }}">{{ $p->sex }}</td>
                                         <td class="text-center">{{ $p->area }}</td>
                                         <td class="{{ $class5 }}">{{ $p->phic }}</td>
@@ -170,9 +183,9 @@
                                 <thead class="bg-gray">
                                 <tr>
                                     <td></td>
-                                    <th>Patient Name</th>
-                                    <th width="30%">Date</th>
-                                    <th width="30%">Time</th>
+                                    <th><a href="{{ url('/patients/sort/lname') }}">Patient Name <i class="{{ $icon2 }}"></i></a></th>
+                                    <th width="30%"><a href="{{ url('/patients/sort/created_at') }}">Date <i class="{{ $icon6 }}"></i></a></th>
+                                    <th width="30%"><a href="{{ url('/patients/sort/created_at') }}">Time <i class="{{ $icon6 }}"></i></a></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -194,9 +207,9 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{{ $p->lname }}, {{ $p->fname }}</td>
-                                        <td>{{ date('F d, Y', strtotime($p->created_at)) }}</td>
-                                        <td>{{ date('h:i A', strtotime($p->created_at)) }}</td>
+                                        <td class="{{ $class2 }}">{{ $p->lname }}, {{ $p->fname }}</td>
+                                        <td class="{{ $class6 }}">{{ date('F d, Y', strtotime($p->created_at)) }}</td>
+                                        <td class="{{ $class6 }}">{{ date('h:i A', strtotime($p->created_at)) }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

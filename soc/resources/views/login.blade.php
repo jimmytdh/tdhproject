@@ -30,6 +30,12 @@
                     </div>
                 @endif
 
+                @if(\Illuminate\Support\Facades\Input::get('q')=='denied')
+                    <div class="text-center text-danger mt-3 mb-3">
+                        You don't have access in this system!
+                    </div>
+                @endif
+
                 <form method="post" action="{{ asset('login') }}">
                     {{ csrf_field() }}
                     <div class="form-group">
@@ -79,5 +85,4 @@
 </script>
 </body>
 
-<!-- Mirrored from foxythemes.net/preview/products/maisonnette/page-login.php by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 16 Aug 2018 01:21:43 GMT -->
 </html>

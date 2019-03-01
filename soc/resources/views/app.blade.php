@@ -18,11 +18,11 @@
     <title>
         {{ (isset($title)) ? $title: 'TalisayMedSys' }}
     </title>
-    @yield('css')
+
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/lib/stroke-7/style.css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('/') }}/assets/lib/theme-switcher/theme-switcher.min.css"/>
-
+    @yield('css')
     <link type="text/css" href="{{ asset('/') }}/assets/css/app.css" rel="stylesheet">
 
     <style>
@@ -73,6 +73,11 @@
                             <ul class="mai-nav-tabs-sub mai-sub-nav nav">
                                 <li class="nav-item">
                                     <a href="{{ url('/home') }}" class="nav-link">
+                                        <span class="icon s7-graph"></span><span class="name">Dashboard</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('/summary') }}" class="nav-link">
                                         <span class="icon s7-display1"></span><span class="name">Summary of Charges</span>
                                     </a>
                                 </li>

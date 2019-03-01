@@ -54,6 +54,13 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="panel-body">
+                        <?php
+                            $time = str_replace(':','','17:00:00');
+                            $now = date('His');
+                            $name = "User's Fee";
+                        ?>
+
+                        <h4 style="color:#2a2a2a;">Patient Name: <font style="color:#7171c5">{{ ucwords($patient->lname) }}, {{ ucwords($patient->fname) }}</font></h4>
                         <div class="row">
                             <div class="col-md-6">
                                 <table border="1" width="100%">
@@ -65,9 +72,16 @@
                                     </thead>
                                     <tbody id="fixed_data">
                                     @foreach($opdcharges as $row)
-                                        @if((strtolower($row->name))==='supplies')
-                                            <?php continue; ?>
-                                        @endif
+                                        <?php
+                                            $class = '';
+                                            if((strtolower($row->name))==='supplies') continue;
+
+                                            if($row->name==$name && $row->amount==100 && $now >= $time)
+                                                $class = 'hidden';
+                                            elseif($row->name==$name && $row->amount==150 && $now < $time)
+                                                $class = 'hidden';
+                                        ?>
+                                        @if($class=='')
                                         <tr class="search_item">
                                             <td>
                                                 <label class="custom-control custom-checkbox custom-control-inline select-item">
@@ -77,12 +91,13 @@
                                                            data-id="{{ $row->id }}"
                                                            class="custom-control-input">
                                                     <span class="custom-control-label">
-                                                    {{ $row->name }}
-                                                </span>
+                                                        {{ $row->name }}
+                                                    </span>
                                                 </label>
                                             </td>
                                             <td class="charges-{{ $row->id }}"></td>
                                         </tr>
+                                        @endif
                                     @endforeach
                                     </tbody>
                                 </table>

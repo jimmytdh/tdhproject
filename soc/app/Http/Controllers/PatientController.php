@@ -40,7 +40,7 @@ class PatientController extends Controller
             $patients = $patients->orderBy($sort->name,$sort->order);
         }
 
-        $patients = $patients->paginate(20);
+        $patients = $patients->orderBy('id','desc')->paginate(20);
         return view('page.patients',[
             'title' => 'List of Patients',
             'patients' => $patients,
@@ -97,10 +97,10 @@ class PatientController extends Controller
             'area' => $req->area,
             'status' => 0
         );
-        Patient::create($data);
+        $patient = Patient::create($data);
 
         Log::create('Add Patient',"Added a new patient $req->fname $req->lname");
-        return redirect()->back()->with('status','added');
+        return redirect('charges/generate/'.$patient->id);
     }
 
     public function edit($id)

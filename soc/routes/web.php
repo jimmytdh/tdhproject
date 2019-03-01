@@ -13,6 +13,7 @@
 //Homepage of admin
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
+Route::get('/summary', 'HomeController@summary');
 
 
 Route::get('/login','MainController@login');
@@ -72,7 +73,7 @@ Route::get('/print','PrintController@printSoa');
 
 
 Route::get('/test',function (){
-    $data = \App\Homis::limit(10)->get();
+    $data = \App\Homis::orderBy('hpercode','desc')->limit(10)->get();
     foreach($data as $key => $value)
     {
         echo $value.'<br>';

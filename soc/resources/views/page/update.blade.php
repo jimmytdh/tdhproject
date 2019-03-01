@@ -64,6 +64,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="panel-body">
+                        <h4 style="color:#2a2a2a;">Patient Name: <font style="color:#7171c5">{{ ucwords($patient->lname) }}, {{ ucwords($patient->fname) }}</font></h4>
                         <div class="row">
                             <div class="col-md-6">
                                 <table border="1" width="100%">

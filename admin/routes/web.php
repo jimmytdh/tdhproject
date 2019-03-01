@@ -55,6 +55,11 @@ Route::get('/divisions/update/{id}','DivisionController@edit');
 Route::post('/divisions/update','DivisionController@update');
 Route::get('/divisions/delete/{id}','DivisionController@delete');
 
+//Manage IP Addresses
+Route::get('/ipuser','IPController@index');
+Route::get('/ipuser/edit/{id}','IPController@edit');
+Route::post('/ipuser/update','IPController@update');
+
 //Update administrator account
 Route::post('system/update','MainController@update');
 

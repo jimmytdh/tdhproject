@@ -25,7 +25,7 @@ class PrintController extends Controller
                     ->where('section','opdothers')
                     ->first();
 
-        $customPaper = array(0,0,297.6,420.94);
+        $customPaper = array(0,0,595.276,420.94);
         $pdf = PDF::loadView('page.pdf',[
             'patient' => $patient,
             'charges' => $charges,

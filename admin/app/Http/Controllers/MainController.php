@@ -79,16 +79,15 @@ class MainController extends Controller
                 if($login->level==1)
                 {
                     return redirect('/home');
-                    return 'ok';
                 }else{
                     return 'proceed to portal';
                 }
             }else{
-                return 'incorrect password';
+                return redirect('/login?q=error');
             }
         }
 
-        return 'error';
+        return redirect('/login?q=empty');
     }
 
 

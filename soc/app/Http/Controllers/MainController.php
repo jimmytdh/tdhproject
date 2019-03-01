@@ -69,6 +69,9 @@ class MainController extends Controller
         {
             if(Hash::check($req->password,$login->password))
             {
+                if($login->level==0)
+                    return redirect('/login?q=denied');
+
                 $profile = Profile::find($login->prof_id);
                 $login->area = 'all';
                 Session::put('user',$login);

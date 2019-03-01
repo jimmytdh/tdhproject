@@ -14,11 +14,18 @@ class HomeController extends Controller
 
     public function index()
     {
+        return view('page.home',[
+            'title' => 'Dashboard: Summary of Charges'
+        ]);
+    }
+
+    public function summary()
+    {
         $date = Item::orderBy('updated_at','desc')
                     ->first()
                     ->updated_at;
 
-        return view('page.home',[
+        return view('page.summary',[
             'last_update' => date('F d, Y h:i A',strtotime($date)),
             'fixed' => Item::where('section','fixed')->get(),
             'room' => Item::where('section','room')->get(),
@@ -34,7 +41,7 @@ class HomeController extends Controller
             'orsuture' => Item::where('section','orsuture')->get(),
             'orfluid' => Item::where('section','orfluid')->get(),
             'ormedicine' => Item::where('section','ormedicine')->get(),
-            'title' => 'Homepage: Summary of Charges'
+            'title' => 'Summary of Charges'
         ]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Draft;
 use App\Item;
 use App\Patient;
+use App\Serial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\LogController as Log;
@@ -117,7 +118,8 @@ class ItemController extends Controller
 
     public function generate($id)
     {
-        $area = Patient::find($id)->area;
+        $patient = Patient::find($id);
+        $area = $patient->area;
         $page = '';
         if($area=='ER' || $area=='DR'){
             return view('page.generate',[
@@ -130,7 +132,7 @@ class ItemController extends Controller
                 'gas' => Item::where('section','gas')->get(),
                 'outsource' => Item::where('section','outsource')->get(),
                 'ancillary' => Item::where('section','ancillary')->get(),
-
+                'patient' => $patient
             ]);
         }
         elseif($area=='OR'){
@@ -142,13 +144,15 @@ class ItemController extends Controller
                 'orfluid' => Item::where('section','orfluid')->get(),
                 'orsuture' => Item::where('section','orsuture')->get(),
                 'ormedicine' => Item::where('section','ormedicine')->get(),
+                'patient' => $patient
             ]);
         }
         elseif($area=='OPD'){
             return view('page.generate3',[
                 'id' => $id,
                 'opdcharges' => Item::where('section','opdcharges')->get(),
-                'opdothers' => Item::where('section','opdothers')->get()
+                'opdothers' => Item::where('section','opdothers')->get(),
+                'patient' => $patient
             ]);
         }
 
@@ -157,7 +161,8 @@ class ItemController extends Controller
 
     public function updateCharges($id)
     {
-        $area = Patient::find($id)->area;
+        $patient = Patient::find($id);
+        $area = $patient->area;
 
         if($area=='ER' || $area=='DR')
         {
@@ -172,6 +177,7 @@ class ItemController extends Controller
                 'gas' => Item::where('section','gas')->get(),
                 'outsource' => Item::where('section','outsource')->get(),
                 'ancillary' => Item::where('section','ancillary')->get(),
+                'patient' => $patient
 
             ]);
         }else if($area=='OR'){
@@ -184,6 +190,7 @@ class ItemController extends Controller
                 'orfluid' => Item::where('section','orfluid')->get(),
                 'orsuture' => Item::where('section','orsuture')->get(),
                 'ormedicine' => Item::where('section','ormedicine')->get(),
+                'patient' => $patient
 
             ]);
         }else if($area=='OPD'){
@@ -191,7 +198,32 @@ class ItemController extends Controller
                 'title' => 'Update Charges',
                 'id' => $id,
                 'opdcharges' => Item::where('section','opdcharges')->get(),
-                'opdothers' => Item::where('section','opdothers')->get()
+                'opdothers' => Item::where('section','opdothers')->get(),
+                'patient' => $patient
+            ]);
+        }
+    }
+
+    public function generateSerial($area,$id)
+    {
+        $number = 0;
+        $check = Serial::where('patient_id',$id)
+                    ->where('area',$area)
+                    ->first();
+        if(!$check){
+            $last = Serial::where('area',$area)
+                ->orderBy('id','desc')
+                ->first();
+            if($last)
+            {
+                $number = $last->number;
+            }
+            $number += 1;
+            Serial::create([
+                'patient_id' => $id,
+                'year' => date('y'),
+                'number' => $number,
+                'area' => $area
             ]);
         }
     }
@@ -199,6 +231,8 @@ class ItemController extends Controller
     public function saveDraft(Request $req,$id)
     {
         Draft::where('patient_id',$id)->delete();
+        $area = Patient::find($id)->area;
+        self::generateSerial($area,$id);
 
         $items = $req->items;
         foreach($items as $item => $value)
@@ -243,7 +277,7 @@ class ItemController extends Controller
     {
         $area = Patient::find($id)->area;
         if($area=='OPD')
-            return redirect('/print/opd/'.$id);
+            return redirect('/charges/update/'.$id)->with('status','print');
 
         $orcharge = Draft::join('items','items.id','=','drafts.item_id')
                     ->where('items.section','orcharge')

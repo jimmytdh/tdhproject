@@ -59,6 +59,12 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="panel-body">
+                        <?php
+                            $time = str_replace(':','','17:00:00');
+                            $now = date('His');
+                            $name = "User's Fee";
+                        ?>
+                        <h4 style="color:#2a2a2a;">Patient Name: <font style="color:#7171c5">{{ ucwords($patient->lname) }}, {{ ucwords($patient->fname) }}</font></h4>
                         <div class="row">
                             <div class="col-md-6">
                                 <table border="1" width="100%">
@@ -70,14 +76,22 @@
                                     </thead>
                                     <tbody id="fixed_data">
                                     @foreach($opdcharges as $row)
-                                        @if((strtolower($row->name))==='supplies')
-                                            <?php continue; ?>
-                                        @endif
                                         <?php
-                                            $check = Item::checkItem($id,$row->id);
-                                            if($check > -1)
-                                                $opd += $row->amount;
+                                            $class = '';
+                                            if((strtolower($row->name))==='supplies') continue;
+
+                                            if($row->name==$name && $row->amount==100 && $now >= $time)
+                                                $class = 'hidden';
+                                            elseif($row->name==$name && $row->amount==150 && $now < $time)
+                                                $class = 'hidden';
+
+                                            if($class==''){
+                                                $check = Item::checkItem($id,$row->id);
+                                                if($check > -1)
+                                                    $opd += $row->amount;
+                                            }
                                         ?>
+                                        @if($class=='')
                                         <tr class="search_item">
                                             <td>
                                                 <label class="custom-control custom-checkbox custom-control-inline select-item">
@@ -94,6 +108,7 @@
                                             </td>
                                             <td class="charges-{{ $row->id }}">@if($check > -1) {{ $row->amount }} @endif</td>
                                         </tr>
+                                        @endif
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -146,15 +161,15 @@
                                         @if((strtolower($row->name))==='supplies')
                                             <?php
                                                 $check = Item::checkItem($id,$row->id);
-                                                if($check > -1)
-                                                    $supply += $row->amount;
+                                                if($check > 0)
+                                                    $supply = $check;
                                             ?>
                                             <tr class="search_item">
                                                 <td>{{ $row->name }}</td>
                                                 <td>
                                                     <input type="number"
                                                            class="supply-select"
-                                                           value="{{ $row->amount }}" min="0" placeholder="0.00"
+                                                           value="{{ $check }}" min="0" placeholder="0.00"
                                                            name="items[{{ $row->id }}]"
                                                            data-id="{{ $row->id }}"
                                                            step="any"
@@ -256,5 +271,9 @@
             }
 
         }
+
+        @if(session('status')=='print')
+         window.open("{{ url('/print/opd/'.$id) }}",'Print Charge Slip',"width=700,height=700");
+        @endif
     </script>
 @endsection
