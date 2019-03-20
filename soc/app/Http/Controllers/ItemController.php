@@ -266,7 +266,8 @@ class ItemController extends Controller
             if($draft->qty==0){
                 return Item::find($item_id)->amount;
             }
-            return $draft->qty;
+            $amount = Item::find($item_id)->amount;
+            return $amount * $draft->qty;
         }
 
 

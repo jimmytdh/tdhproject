@@ -120,13 +120,35 @@
                         <?php $show = 1 ;?>
                     @endif
                     <tr>
-                        <td width="50%">{{ strtoupper($row->name) }}</td>
+                        <?php
+                            $qty = \App\Draft::where('patient_id',$id)
+                                ->where('item_id',$row->id)
+                                ->first();
+                        ?>
+                        <td width="50%">
+                            {{ strtoupper($row->name) }}
+                            @if($qty && $qty->qty>1 && $row->name <> 'Supplies')
+                                <?php
+                                $t = $amount / $qty->qty;
+                                ?>
+                                <span style="float: right;">({{$t}} x {{ $qty->qty }})</span>
+                            @endif
+                        </td>
                         <td width="3px">:</td>
                         <td class="underline">
-                            @if($amount > 0)
-                                {{ number_format($amount,2) }}
+
+                            @if($row->name=='Supplies')
+                                @if($qty)
+                                    {{ number_format($qty->qty,2) }}
+                                    <?php $total += $qty->qty; ?>
+                                @endif
+
+                            @else
+                                @if($amount > 0)
+                                    {{ number_format($amount,2) }}
+                                @endif
+                                <?php $total += $amount; ?>
                             @endif
-                            <?php $total += $amount; ?>
                         </td>
                     </tr>
                 @endif
@@ -234,13 +256,35 @@
                         <?php $show = 1 ;?>
                     @endif
                     <tr>
-                        <td width="50%">{{ strtoupper($row->name) }}</td>
+                        <?php
+                        $qty = \App\Draft::where('patient_id',$id)
+                            ->where('item_id',$row->id)
+                            ->first();
+                        ?>
+                        <td width="50%">
+                            {{ strtoupper($row->name) }}
+                            @if($qty && $qty->qty>1 && $row->name <> 'Supplies')
+                                <?php
+                                $t = $amount / $qty->qty;
+                                ?>
+                                <span style="float: right;">({{$t}} x {{ $qty->qty }})</span>
+                            @endif
+                        </td>
                         <td width="3px">:</td>
                         <td class="underline">
-                            @if($amount > 0)
-                                {{ number_format($amount,2) }}
+
+                            @if($row->name=='Supplies')
+                                @if($qty)
+                                    {{ number_format($qty->qty,2) }}
+                                    <?php $total += $qty->qty; ?>
+                                @endif
+
+                            @else
+                                @if($amount > 0)
+                                    {{ number_format($amount,2) }}
+                                @endif
+                                <?php $total += $amount; ?>
                             @endif
-                            <?php $total += $amount; ?>
                         </td>
                     </tr>
                 @endif

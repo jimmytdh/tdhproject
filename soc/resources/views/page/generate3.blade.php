@@ -94,8 +94,17 @@
                                                         {{ $row->name }}
                                                     </span>
                                                 </label>
+                                                <div style="float: right;" class="qty">
+                                                    <input type="number"
+                                                           name="items[{{ $row->id }}]"
+                                                           value="0"
+                                                           data-amount="{{ $row->amount }}"
+                                                           data-id="{{ $row->id }}"
+                                                           class="custom-qty custom-qty-{{ $row->id }} hidden"
+                                                           style="width: 40px;"/>
+                                                </div>
                                             </td>
-                                            <td class="charges-{{ $row->id }}"></td>
+                                            <td class="amount charges-{{ $row->id }}"></td>
                                         </tr>
                                         @endif
                                     @endforeach
@@ -129,7 +138,7 @@
                                                 </span>
                                                 </label>
                                             </td>
-                                            <td class="charges-{{ $row->id }}"></td>
+                                            <td class="amount charges-{{ $row->id }}"></td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -186,15 +195,26 @@
             var amount = $(this).data('amount');
             var id = $(this).data('id');
             if(this.checked){
-                $('.charges-'+id).html(decimal(amount));
+                $('.charges-'+id).html(amount);
+                $('.custom-qty-'+id).removeClass('hidden').val(1);
                 sub_opd = sub_opd + parseInt(amount);
 
             }else{
-                $('.charges-'+id).html(decimal(''));
+                $('.charges-'+id).html('');
+                $('.custom-qty-'+id).addClass('hidden').val(0);
                 sub_opd = sub_opd - parseInt(amount);
             }
             $('.charges-sub').html(decimal(sub_opd));
             opdcharges = sub_opd;
+            totalAmount();
+        });
+
+        $('.custom-qty').on('change',function(){
+            var id = $(this).data('id');
+            var amount = $(this).data('amount');
+            var qty = $(this).val();
+            var total = amount * qty;
+            $('.charges-'+id).html(total);
             totalAmount();
         });
 
@@ -211,7 +231,14 @@
 
         function totalAmount()
         {
-            var total = opdcharges + supply;
+            var total = 0;
+            $('.amount').each(function(){
+                var amount = $(this).html();
+                amount = parseInt(amount);
+                if($.isNumeric(amount))
+                    total += amount;
+            });
+            total += supply;
             $('.total').html(decimal(total));
         }
 

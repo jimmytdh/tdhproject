@@ -13,6 +13,7 @@
 //Homepage of admin
 Route::get('/', 'HomeController@index');
 Route::get('/home', 'HomeController@index');
+Route::get('/home/data', 'HomeController@data');
 Route::get('/summary', 'HomeController@summary');
 
 
@@ -79,5 +80,7 @@ Route::get('/test',function (){
         echo $value.'<br>';
     }
 });
+
+Route::get('sample/{area}/{start}/{end}','HomeController@countPatientChart2');
 
 

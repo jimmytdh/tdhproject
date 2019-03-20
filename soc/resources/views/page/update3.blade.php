@@ -102,11 +102,26 @@
                                                            data-id="{{ $row->id }}"
                                                            class="custom-control-input">
                                                     <span class="custom-control-label">
-                                                    {{ $row->name }}
-                                                </span>
+                                                        {{ $row->name }}
+                                                    </span>
                                                 </label>
+                                                <div style="float: right;" class="qty">
+                                                    <input type="number"
+                                                           name="items[{{ $row->id }}]"
+                                                           value="{{ ($check>0) ? $check: 0 }}"
+                                                           data-amount="{{ $row->amount }}"
+                                                           data-id="{{ $row->id }}"
+                                                           class="custom-qty custom-qty-{{ $row->id }} @if($check<1) hidden @endif"
+                                                           style="width: 40px;"/>
+                                                </div>
                                             </td>
-                                            <td class="charges-{{ $row->id }}">@if($check > -1) {{ $row->amount }} @endif</td>
+                                            <td class="amount charges-{{ $row->id }}">
+                                                @if($check > 1)
+                                                    {{ $check * $row->amount }}
+                                                @elseif($check==1)
+                                                    {{ $row->amount }}
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endif
                                     @endforeach
@@ -143,7 +158,7 @@
                                                 </span>
                                                 </label>
                                             </td>
-                                            <td class="charges-{{ $row->id }}">@if($check > -1) {{ $row->amount }} @endif</td>
+                                            <td class="amount charges-{{ $row->id }}">@if($check > -1) {{ $row->amount }} @endif</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -196,7 +211,7 @@
 
 @section('js')
     <script type="text/javascript">
-        var opdcharges = parseFloat("{{ $opd }}");
+        var opdcharges = 0;
         var supply = parseFloat("{{ $supply }}");
         totalAmount();
 
@@ -205,12 +220,23 @@
             var id = $(this).data('id');
             if(this.checked){
                 $('.charges-'+id).html(decimal(amount));
+                $('.custom-qty-'+id).removeClass('hidden').val(1);
                 opdcharges = opdcharges + parseInt(amount);
 
             }else{
                 $('.charges-'+id).html(decimal(''));
+                $('.custom-qty-'+id).addClass('hidden').val(1);
                 opdcharges = opdcharges - parseInt(amount);
             }
+            totalAmount();
+        });
+
+        $('.custom-qty').on('change',function(){
+            var id = $(this).data('id');
+            var amount = $(this).data('amount');
+            var qty = $(this).val();
+            var total = amount * qty;
+            $('.charges-'+id).html(total);
             totalAmount();
         });
 
@@ -227,7 +253,14 @@
 
         function totalAmount()
         {
-            var total = opdcharges + supply;
+            var total = 0;
+            $('.amount').each(function(){
+                var amount = $(this).html();
+                amount = parseInt(amount);
+                if($.isNumeric(amount))
+                    total += amount;
+            });
+            total += supply;
             $('.total').html(decimal(total));
         }
 
